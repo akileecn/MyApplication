@@ -10,7 +10,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/demo" />
             <option value="$PROJECT_DIR$/手机安全卫士" />
           </set>
         </option>
