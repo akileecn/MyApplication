@@ -138,13 +138,14 @@ public class MainActivity extends Activity {
         private WeakReference<MainActivity> weakReference;
 
         public MyHandler(MainActivity activity) {
-            weakReference = new WeakReference<MainActivity>(activity);
+            weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
             MainActivity activity=weakReference.get();
             Log.d("test", "msg:" + msg.what);
+            //TODO
             switch (msg.what){
                 case WHAT_NEED_UPDATE:
                     activity.createUpdateDialog();
@@ -159,7 +160,6 @@ public class MainActivity extends Activity {
                     Toast.makeText(activity,"数据异常",Toast.LENGTH_SHORT).show();
                     break;
                 default:
-                    //TODO
                     break;
             }
         }
