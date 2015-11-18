@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 设置条目视图 -->
+    <declare-styleable name="SettingItemView">
+        <attr name="headline" format="string"/>
+        <attr name="enable_desc" format="string"/>
+        <attr name="disable_desc" format="string"/>
+    </declare-styleable>
+</resources>

@@ -2,8 +2,10 @@ package cn.aki.mobilesafe.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -48,12 +50,14 @@ public class SplashActivity extends Activity {
     private int mNewVersionCode;
     private String mNewDescription;
     private String mNewDownloadUrl;
+    private SharedPreferences mSharedPreferences;
 
     //加载最新版本信息的返回Code
     private static final int WHAT_NEED_UPDATE=0;
     private static final int WHAT_URL_ERROR=1;
     private static final int WHAT_NET_ERROR=2;
     private static final int WHAT_JSON_ERROR=3;
+    private static final int WHAT_GO_HOME=4;
 
     private Handler handler=new MyHandler(this);
 
@@ -68,7 +72,15 @@ public class SplashActivity extends Activity {
         tvDownload= (TextView) findViewById(R.id.tv_download);
         getCurrentVersion();
         tvVersion.setText("版本号:" + mVersionName);
-        checkUpdate();
+        mSharedPreferences=getSharedPreferences(Constants.SharedPreferences.FILE_CONFIG, Context.MODE_PRIVATE);
+        //是否自动更新
+        boolean autoUpdate=mSharedPreferences.getBoolean(Constants.SharedPreferences.KEY_AUTO_UPDATE,true);
+        if(autoUpdate){
+            checkUpdate();
+        }else{
+            //延迟发送信息
+            handler.sendEmptyMessageDelayed(WHAT_GO_HOME,2000);
+        }
     }
 
     /**
@@ -112,6 +124,8 @@ public class SplashActivity extends Activity {
                     mNewVersionName=json.getString("versionName");
                     if(mNewVersionCode>mVersionCode){
                         message.what=WHAT_NEED_UPDATE;
+                    }else{
+                        message.what=WHAT_GO_HOME;
                     }
                 }
             } catch (MalformedURLException e) {
@@ -192,6 +206,8 @@ public class SplashActivity extends Activity {
                     Toast.makeText(activity,"数据异常",Toast.LENGTH_SHORT).show();
                     activity.toHome();
                     break;
+                case WHAT_GO_HOME:
+                    activity.toHome();
                 default:
                     break;
             }

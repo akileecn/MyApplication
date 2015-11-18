@@ -1,9 +1,11 @@
 package cn.aki.mobilesafe.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -16,7 +18,7 @@ import cn.aki.mobilesafe.R;
  * 首页面
  */
 public class HomeActivity extends Activity{
-    private GridView glItem;
+    private GridView glList;
     private String[] items={"手机防盗","通讯卫士","软件管理"
                             ,"进程管理","流量统计","手机杀毒"
                             ,"缓存清理","高级工具","设置中心"};
@@ -27,8 +29,21 @@ public class HomeActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        glItem= (GridView) findViewById(R.id.gl_item);
-        glItem.setAdapter(new MyAdapter());
+        glList= (GridView) findViewById(R.id.gl_list);
+        glList.setAdapter(new MyAdapter());
+        glList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (position){
+                //设置中心
+                case 8:
+                    startActivity(new Intent(HomeActivity.this,SettingActivity.class));
+                    break;
+                default:
+                    break;
+            }
+            }
+        });
     }
 
     private class MyAdapter extends BaseAdapter{

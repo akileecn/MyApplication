@@ -3,13 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textSize="30sp"
+        style="@style/TitleStyle"
         android:text="@string/home_title"/>
     <GridView
-        android:id="@+id/gl_item"
+        android:id="@+id/gl_list"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:numColumns="3"/>
