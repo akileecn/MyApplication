@@ -47,6 +47,7 @@ public class SettingItemView extends RelativeLayout {
             tvTitle.setText(title);
             mEnableDesc=typedArray.getString(R.styleable.SettingItemView_enable_desc);
             mDisableDesc=typedArray.getString(R.styleable.SettingItemView_disable_desc);
+            typedArray.recycle();
         }
     }
 

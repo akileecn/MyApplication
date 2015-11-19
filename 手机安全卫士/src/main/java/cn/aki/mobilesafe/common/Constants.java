@@ -23,5 +23,14 @@ public final class Constants {
          * 自动更新key
          */
         public static final String KEY_AUTO_UPDATE="autoUpdate";
+        /**
+         * 密码
+         */
+        public static final String KEY_PASSWORD="password";
+        /**
+         * 完成设置向导
+         */
+        public static final String KEY_GUIDED="guided";
+
     }
 }

@@ -15,6 +15,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +83,11 @@ public class SplashActivity extends Activity {
             //延迟发送信息
             handler.sendEmptyMessageDelayed(WHAT_GO_HOME,2000);
         }
+        RelativeLayout rlRoot= (RelativeLayout) findViewById(R.id.rl_root);
+        //动画显示
+        AlphaAnimation animation=new AlphaAnimation(0.3f,1f);
+        animation.setDuration(2000);
+        rlRoot.startAnimation(animation);
     }
 
     /**
