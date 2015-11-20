@@ -23,6 +23,11 @@
         <activity android:name=".activity.SettingActivity"/>
         <!-- 手机防盗 -->
         <activity android:name=".activity.SafeActivity"/>
+        <!-- 手机防盗向导页 -->
+        <activity android:name=".activity.SafeStep1Activity"/>
+        <activity android:name=".activity.SafeStep2Activity"/>
+        <activity android:name=".activity.SafeStep3Activity"/>
+        <activity android:name=".activity.SafeStep4Activity"/>
     </application>
 
 </manifest>

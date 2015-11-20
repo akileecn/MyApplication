@@ -33,7 +33,11 @@
     </RelativeLayout>
     <TextView
         style="@style/ContentStyle"
-        android:text="重新进入设置向导" />
+        android:text="重新进入设置向导"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:onClick="toSafeGuide"
+        android:background="@drawable/button_grey_selector"/>
     <TextView
         style="@style/ContentStyle"
         android:layout_width="match_parent"

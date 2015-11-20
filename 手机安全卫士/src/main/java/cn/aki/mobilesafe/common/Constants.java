@@ -30,7 +30,7 @@ public final class Constants {
         /**
          * 完成设置向导
          */
-        public static final String KEY_GUIDED="guided";
+        public static final String KEY_SAFE_GUIDED="safeGuided";
 
     }
 }
