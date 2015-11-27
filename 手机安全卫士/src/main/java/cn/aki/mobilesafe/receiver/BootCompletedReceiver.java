@@ -1,0 +1,38 @@
+package cn.aki.mobilesafe.receiver;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+import android.util.Log;
+
+import cn.aki.mobilesafe.common.Constants;
+
+/**
+ * Created by Administrator on 2015/11/27.
+ * 手机启动事件监听
+ */
+public class BootCompletedReceiver extends BroadcastReceiver{
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        SharedPreferences mPref=context.getSharedPreferences(Constants.SharedPreferences.FILE_CONFIG,Context.MODE_PRIVATE);
+        boolean protect=mPref.getBoolean(Constants.SharedPreferences.KEY_PROTECT,false);
+        if(protect){
+            String sim=mPref.getString(Constants.SharedPreferences.KEY_SIM,null);
+            if(!TextUtils.isEmpty(sim)){
+                TelephonyManager telephonyManager= (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                String simSerialNumber=telephonyManager.getSimSerialNumber();
+                if(sim.equals(simSerialNumber)){
+                    Log.e("test","手机安全");
+                }else{
+                    Log.e("test","sim卡变更");
+                }
+            }
+        }else{
+            Log.e("text","未启动保护");
+        }
+    }
+}

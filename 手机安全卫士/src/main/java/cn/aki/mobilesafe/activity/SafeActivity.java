@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import cn.aki.mobilesafe.R;
 import cn.aki.mobilesafe.common.Constants;
@@ -24,10 +26,21 @@ public class SafeActivity extends Activity {
         boolean safeGuided=mPref.getBoolean(Constants.SharedPreferences.KEY_SAFE_GUIDED,false);
         if(safeGuided){
             setContentView(R.layout.activity_safe);
+            //显示安全手机号码
+            String phone=mPref.getString(Constants.SharedPreferences.KEY_SAFE_PHONE, "");
+            TextView tvPhone= (TextView) findViewById(R.id.tv_phone);
+            tvPhone.setText(phone);
+            //显示保护开启状态
+            boolean protect=mPref.getBoolean(Constants.SharedPreferences.KEY_PROTECT,false);
+            ImageView ivProtect= (ImageView) findViewById(R.id.iv_protect);
+            if(protect){
+                ivProtect.setImageResource(R.drawable.lock);
+            }else{
+                ivProtect.setImageResource(R.drawable.unlock);
+            }
         }else{
             toSafeGuide(null);
         }
-
     }
     /**
      * 跳转到向导页

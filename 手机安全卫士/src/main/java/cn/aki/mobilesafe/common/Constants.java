@@ -31,6 +31,18 @@ public final class Constants {
          * 完成设置向导
          */
         public static final String KEY_SAFE_GUIDED="safeGuided";
+        /**
+         * sim卡序列号
+         */
+        public static final String KEY_SIM="sim";
+        /**
+         * 安全手机
+         */
+        public static final String KEY_SAFE_PHONE="safePhone";
+        /**
+         * 是否开启保护
+         */
+        public static final String KEY_PROTECT = "protect";
 
     }
 }

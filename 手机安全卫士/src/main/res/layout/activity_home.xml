@@ -5,6 +5,13 @@
     <TextView
         style="@style/TitleStyle"
         android:text="@string/home_title"/>
+    <TextView
+        style="@style/ContentStyle"
+        android:text="跑马灯效果跑马灯效果跑马灯效果跑马灯效果跑马灯效果"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:singleLine="true"/>
     <GridView
         android:id="@+id/gl_list"
         android:layout_width="wrap_content"
