@@ -33,6 +33,13 @@
     </RelativeLayout>
     <TextView
         style="@style/ContentStyle"
+        android:text="激活设备管理器"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:onClick="enableDeviceAdmin"
+        android:background="@drawable/button_grey_selector"/>
+    <TextView
+        style="@style/ContentStyle"
         android:text="重新进入设置向导"
         android:layout_width="match_parent"
         android:clickable="true"

@@ -98,7 +98,6 @@ public class SplashActivity extends Activity {
             PackageInfo packageInfo=getPackageManager().getPackageInfo(getPackageName(), 0);
             mVersionCode=packageInfo.versionCode;
             mVersionName=packageInfo.versionName;
-            Log.d("test","mVersionCode:"+mVersionCode+",mVersionName:"+mVersionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

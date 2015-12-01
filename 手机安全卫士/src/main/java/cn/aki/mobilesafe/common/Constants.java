@@ -43,6 +43,32 @@ public final class Constants {
          * 是否开启保护
          */
         public static final String KEY_PROTECT = "protect";
+        /**
+         * 定位
+         */
+        public static final String KEY_LOCATION="location";
 
+    }
+
+    /**
+     * 短信指令
+     */
+    public static final class SmsCommand{
+        /**
+         * GPS追踪
+         */
+        public static final String LOCATION="#*location*#";
+        /**
+         * 播放报警音乐
+         */
+        public static final String ALARM="#*alarm*#";
+        /**
+         * 删除数据
+         */
+        public static final String WIPE_DATA="#*wipedata*#";
+        /**
+         * 锁屏
+         */
+        public static final String LOCK_SCREEN="#*lockscreen*#";
     }
 }
