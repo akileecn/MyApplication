@@ -20,6 +20,8 @@
     <!-- 定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 抖动 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
     android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -47,6 +49,12 @@
         <activity android:name=".activity.SafeStep4Activity"/>
         <!-- 联系人 -->
         <activity android:name=".activity.ContactsActivity"/>
+        <!-- 高级工具 -->
+        <activity android:name=".activity.ToolsActivity"/>
+        <!-- 归属地 -->
+        <activity android:name=".activity.AddressActivity"/>
+
+
         <!-- 手机启动监听 -->
         <receiver android:name=".receiver.BootCompletedReceiver">
             <intent-filter>
@@ -60,9 +68,6 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
-        <!-- 定位 -->
-        <service android:name=".service.LocationService"/>
-
         <!-- 设备管理 -->
         <receiver android:name=".receiver.DeviceAdminSampleReceiver"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
@@ -72,6 +77,9 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+
+        <!-- 定位 -->
+        <service android:name=".service.LocationService"/>
     </application>
 
 </manifest>

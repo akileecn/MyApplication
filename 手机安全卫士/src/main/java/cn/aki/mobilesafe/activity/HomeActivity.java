@@ -52,6 +52,9 @@ public class HomeActivity extends Activity{
                 case 0:
                     showPasswordDialog();
                     break;
+                case 7:
+                    startActivity(new Intent(HomeActivity.this,ToolsActivity.class));
+                    break;
                 //设置中心
                 case 8:
                     startActivity(new Intent(HomeActivity.this,SettingActivity.class));

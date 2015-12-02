@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import cn.aki.mobilesafe.common.Constants;
 
@@ -24,7 +25,7 @@ public abstract class BaseSafeStepActivity extends Activity {
     /**
      * y轴距离
      */
-    private static final float Y_DISTANCE=100;
+    private static final float Y_DISTANCE=200;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

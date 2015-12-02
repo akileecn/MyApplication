@@ -28,6 +28,7 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -66,6 +67,8 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //初始化数据库
+        copyDb("address.db");
         //初始化
         x.Ext.init(getApplication());
         x.Ext.setDebug(true);
@@ -160,6 +163,9 @@ public class SplashActivity extends Activity {
 
     }
 
+    /**
+     * 创建更新对话框
+     */
     private void createUpdateDialog(){
         AlertDialog.Builder builder= new AlertDialog.Builder(this);
         //builder.setCancelable(false); //禁止取消对话框，用户体验差，不推荐使用
@@ -284,5 +290,44 @@ public class SplashActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         toHome();
+    }
+
+    /**
+     * 复制数据库文件
+     * @param dbName assets目录下的文件名
+     */
+    private void copyDb(String dbName){
+        File direct=new File(getFilesDir(),dbName);
+        if(direct.exists()){
+            return;
+        }
+        InputStream is=null;
+        FileOutputStream fos=null;
+        try {
+            is=getAssets().open(dbName);
+            fos=new FileOutputStream(direct);
+            byte[] buff=new byte[1024];
+            int length;
+            while ((length=is.read(buff))!=-1){
+                fos.write(buff,0,length);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(is!=null){
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(fos!=null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

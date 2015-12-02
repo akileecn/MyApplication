@@ -71,4 +71,14 @@ public final class Constants {
          */
         public static final String LOCK_SCREEN="#*lockscreen*#";
     }
+
+    /**
+     * 数据库
+     */
+    public static final class DataBase{
+        /**
+         * 归属地
+         */
+        public static final String Address="data/data/cn.aki.mobilesafe/files/address.db";
+    }
 }
