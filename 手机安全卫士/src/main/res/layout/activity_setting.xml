@@ -13,4 +13,21 @@
         aki:disable_desc="@string/setting_auto_update_disable_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <cn.aki.mobilesafe.view.SettingItemView
+        android:id="@+id/siv_show_address"
+        aki:headline="电话归属地显示设置"
+        aki:enable_desc="归属地显示"
+        aki:disable_desc="归属地不显示"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <cn.aki.mobilesafe.view.SettingClickView
+        android:id="@+id/scv_address_style"
+        aki:headline="设置归属地样式"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <cn.aki.mobilesafe.view.SettingClickView
+        android:id="@+id/scv_address_location"
+        aki:headline="设置归属地位置"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

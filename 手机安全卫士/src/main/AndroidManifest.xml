@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.aki.mobilesafe" android:versionCode="1" android:versionName="0.0.1">
+    package="cn.aki.mobilesafe">
     <!-- 访问网络 -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- 存储 -->
@@ -22,6 +22,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- 抖动 -->
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- 接收去电通知 -->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+
     <application
     android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -53,7 +56,8 @@
         <activity android:name=".activity.ToolsActivity"/>
         <!-- 归属地 -->
         <activity android:name=".activity.AddressActivity"/>
-
+        <!-- 归属地位置 -->
+        <activity android:name=".activity.DragAddressActivity"/>
 
         <!-- 手机启动监听 -->
         <receiver android:name=".receiver.BootCompletedReceiver">
@@ -80,6 +84,13 @@
 
         <!-- 定位 -->
         <service android:name=".service.LocationService"/>
+        <!-- 来电去电归属地显示 -->
+        <service android:name=".service.AddressService"/>
+        <receiver android:name=".receiver.OutgoingCallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

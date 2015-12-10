@@ -1,5 +1,7 @@
 package cn.aki.mobilesafe.common;
 
+import cn.aki.mobilesafe.R;
+
 /**
  * Created by Administrator on 2015/11/10.
  * 常量
@@ -47,6 +49,18 @@ public final class Constants {
          * 定位
          */
         public static final String KEY_LOCATION="location";
+        /**
+         * 电话归属地样式
+         */
+        public static final String KEY_ADDRESS_STYLE="addressStyle";
+        /**
+         * 归属地x坐标
+         */
+        public static final String KEY_ADDRESS_LOCATION_X="addressLocationX";
+        /**
+         * 归属地y坐标
+         */
+        public static final String KEY_ADDRESS_LOCATION_Y="addressLocationY";
 
     }
 
@@ -80,5 +94,20 @@ public final class Constants {
          * 归属地
          */
         public static final String Address="data/data/cn.aki.mobilesafe/files/address.db";
+    }
+
+    /**
+     * 归属地样式
+     */
+    public static final class AddressStyle{
+        /**
+         * 描述
+         */
+        public static final String[] DESC={"蓝","灰","绿","橙","白"};
+        /**
+         * 图片
+         */
+        public static final int[] DRAWABLE={R.drawable.call_locate_blue,R.drawable.call_locate_gray
+                ,R.drawable.call_locate_green,R.drawable.call_locate_orange,R.drawable.call_locate_white};
     }
 }
