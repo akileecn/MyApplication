@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.common.util.FileUtil;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 

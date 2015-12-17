@@ -30,4 +30,11 @@
         aki:headline="设置归属地位置"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <cn.aki.mobilesafe.view.SettingItemView
+        android:id="@+id/siv_rocket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        aki:headline="是否显示小火箭"
+        aki:disable_desc="隐藏"
+        aki:enable_desc="显示"/>
 </LinearLayout>

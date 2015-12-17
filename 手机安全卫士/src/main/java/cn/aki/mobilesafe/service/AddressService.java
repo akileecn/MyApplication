@@ -7,10 +7,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -31,6 +34,11 @@ public class AddressService extends Service{
     private WindowManager mWindowManager;
     private View mToastView;
     private SharedPreferences mPref;
+
+    //归属地toast位置
+    private WindowManager.LayoutParams params;
+    private int tempX;
+    private int tempY;
 
     @Nullable
     @Override
@@ -53,6 +61,7 @@ public class AddressService extends Service{
         //toast
         mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
     }
+
 
     /**
      * 来电监听器
@@ -84,7 +93,7 @@ public class AddressService extends Service{
         @Override
         public void onReceive(Context context, Intent intent) {
             String address=AddressDao.getAddress(getResultData());
-            Toast.makeText(AddressService.this,address,Toast.LENGTH_LONG).show();
+            showToast(address);
         }
     }
 
@@ -106,26 +115,76 @@ public class AddressService extends Service{
         if(mToastView==null){
             mToastView = View.inflate(AddressService.this, R.layout.toast_address,null);
         }
+        //设置样式
         int style=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_STYLE,0);
-        int x=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_X,0);
-        int y=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_Y,0);
-        //TODO 在屏幕定位
         mToastView.setBackgroundResource(Constants.AddressStyle.DRAWABLE[style]);
         TextView tvMessage = (TextView) mToastView.findViewById(R.id.tv_message);
-
         tvMessage.setText(message);
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        //从Toast.class里抄的
+        params = new WindowManager.LayoutParams();
+        //设置视图在window中的属性
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.format = PixelFormat.TRANSLUCENT;
-        params.type = WindowManager.LayoutParams.TYPE_TOAST;
-        params.setTitle("Toast");
+        //电话层权限
+        params.type = WindowManager.LayoutParams.TYPE_PHONE;
         params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-        params.x=x;
-        params.y=y;
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        //将原坐标中中间修改为左上
+        params.gravity= Gravity.START|Gravity.TOP;
+        params.x=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_X,0);
+        params.y=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_Y,0);
+        //获得屏幕尺寸
+        Point winSize=new Point();
+        mWindowManager.getDefaultDisplay().getSize(winSize);
+        final int winWidth=winSize.x;
+        final int winHeight=winSize.y;
+        //监听拖动
+        mToastView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        tempX= (int) event.getRawX();
+                        tempY= (int) event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        int newX= (int) event.getRawX();
+                        int newY= (int) event.getRawY();
+                        int dx=newX-tempX;
+                        int dy=newY-tempY;
+                        int left=params.x+dx;
+                        int top=params.y+dy;
+                        int right=left+mToastView.getWidth();
+                        int bottom=top+mToastView.getHeight();
+                        boolean changed=false;
+                        if(left>0&&right<winWidth){
+                            params.x=left;
+                            tempX=newX;
+                            changed=true;
+                        }
+                        if(top>0&&bottom<winHeight){
+                            params.y=top;
+                            tempY=newY;
+                            changed=true;
+                        }
+                        if(changed){
+                            mWindowManager.updateViewLayout(mToastView,params);
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        //保存
+                        SharedPreferences.Editor editor=mPref.edit();
+                        editor.putInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_X,params.x);
+                        editor.putInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_Y,params.y);
+                        editor.apply();
+                        break;
+                    default:
+                        break;
+                }
+                //设置为false时无法获得后续动作
+                return true;
+            }
+        });
         //放到window上
         mWindowManager.addView(mToastView,params);
     }

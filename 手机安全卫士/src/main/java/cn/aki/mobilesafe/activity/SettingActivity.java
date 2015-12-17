@@ -12,6 +12,7 @@ import android.view.View;
 import cn.aki.mobilesafe.R;
 import cn.aki.mobilesafe.common.Constants;
 import cn.aki.mobilesafe.service.AddressService;
+import cn.aki.mobilesafe.service.RocketService;
 import cn.aki.mobilesafe.utils.ServiceStatusUtils;
 import cn.aki.mobilesafe.view.SettingClickView;
 import cn.aki.mobilesafe.view.SettingItemView;
@@ -26,6 +27,7 @@ public class SettingActivity extends Activity {
     private SharedPreferences mPref;//参数
     private SettingClickView scvAddressStyle;   //归属地样式
     private SettingClickView scvAddressLocation;    //归属地位置
+    private SettingItemView sivRocket;  //火箭
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,12 @@ public class SettingActivity extends Activity {
         mPref=getSharedPreferences(Constants.SharedPreferences.FILE_CONFIG, Context.MODE_PRIVATE);
         scvAddressStyle= (SettingClickView) findViewById(R.id.scv_address_style);
         scvAddressLocation= (SettingClickView) findViewById(R.id.scv_address_location);
+        sivRocket= (SettingItemView) findViewById(R.id.siv_rocket);
         initUpdate();
         initShowAddress();
         initAddressStyle();
         initAddressLocation();
+        initRocket();
     }
 
     /**
@@ -122,7 +126,26 @@ public class SettingActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //打开拖拽页面
-                startActivity(new Intent(SettingActivity.this,DragAddressActivity.class));
+                startActivity(new Intent(SettingActivity.this, DragAddressActivity.class));
+            }
+        });
+    }
+
+    /**
+     * 初始化火箭
+     */
+    private void initRocket(){
+        sivRocket.check(ServiceStatusUtils.isActive(this,RocketService.class));
+        sivRocket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(sivRocket.isChecked()){
+                    sivRocket.check(false);
+                    stopService(new Intent(SettingActivity.this, RocketService.class));
+                }else{
+                    sivRocket.check(true);
+                    startService(new Intent(SettingActivity.this,RocketService.class));
+                }
             }
         });
     }

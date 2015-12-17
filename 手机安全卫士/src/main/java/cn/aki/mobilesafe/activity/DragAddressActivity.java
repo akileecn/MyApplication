@@ -3,13 +3,15 @@ package cn.aki.mobilesafe.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cn.aki.mobilesafe.R;
 import cn.aki.mobilesafe.common.Constants;
@@ -23,6 +25,8 @@ public class DragAddressActivity extends Activity {
     private TextView tvTop;
     private TextView tvBottom;
     private SharedPreferences mPref;
+    private int appWidth;
+    private int appHeight;
 
     private int tempX;
     private int tempY;
@@ -37,15 +41,51 @@ public class DragAddressActivity extends Activity {
         initDrag();
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            Rect rect=new Rect();
+            //获得应用高度
+            getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+            appWidth=rect.width();
+            appHeight=rect.height();
+            initDrag();
+        }
+    }
+
     /**
      * 初始化拖拽图标
      */
     private void initDrag(){
+        resetTopBottom();
         int initX=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_X,0);
         int initY=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_Y,0);
-        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) ivDrag.getLayoutParams();
+        final RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) ivDrag.getLayoutParams();
         params.setMargins(initX,initY,0,0);
         ivDrag.setLayoutParams(params);
+        ivDrag.setOnClickListener(new View.OnClickListener() {
+            private long[] times=new long[2];
+            @Override
+            public void onClick(View v) {
+                System.arraycopy(times,1,times,0,times.length-1);
+                if(SystemClock.uptimeMillis()-times[0]<500){
+                    //重绘
+                    int left=appWidth/2-ivDrag.getWidth()/2;
+                    int top=appHeight/2-ivDrag.getHeight()/2;
+                    int right=appWidth/2+ivDrag.getWidth()/2;
+                    int bottom=appHeight/2+ivDrag.getHeight()/2;
+                    ivDrag.layout(left, top, right, bottom);
+                    //保存
+                    SharedPreferences.Editor editor=mPref.edit();
+                    editor.putInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_X,ivDrag.getLeft());
+                    editor.putInt(Constants.SharedPreferences.KEY_ADDRESS_LOCATION_Y,ivDrag.getTop());
+                    editor.apply();
+                }else{
+                    times[times.length-1]=SystemClock.uptimeMillis();
+                }
+            }
+        });
         ivDrag.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -59,20 +99,29 @@ public class DragAddressActivity extends Activity {
                         int newY= (int) event.getRawY();
                         int dx=newX-tempX;
                         int dy=newY-tempY;
-                        //重绘
-                        ivDrag.layout(ivDrag.getLeft()+dx,ivDrag.getTop()+dy,ivDrag.getRight()+dx,ivDrag.getBottom()+dy);
-                        if(ivDrag.getTop()<tvTop.getBottom()){
-                            tvTop.setVisibility(View.INVISIBLE);
-                        }else{
-                            tvTop.setVisibility(View.VISIBLE);
+                        int left=ivDrag.getLeft();
+                        int top=ivDrag.getTop();
+                        int right=ivDrag.getRight();
+                        int bottom=ivDrag.getBottom();
+                        boolean changed=false;
+                        //防越界
+                        if(left+dx>0&&right+dx<appWidth){
+                            tempX=newX;
+                            changed=true;
+                            left+=dx;
+                            right+=dx;
                         }
-                        if(ivDrag.getBottom()>tvBottom.getTop()){
-                            tvBottom.setVisibility(View.INVISIBLE);
-                        }else{
-                            tvBottom.setVisibility(View.VISIBLE);
+                        if(top+dy>0&&bottom+dy<appHeight){
+                            tempY=newY;
+                            changed=true;
+                            top+=dy;
+                            bottom+=dy;
                         }
-                        tempX=newX;
-                        tempY=newY;
+                        if(changed){
+                            //重绘
+                            ivDrag.layout(left, top, right, bottom);
+                            resetTopBottom();
+                        }
                         break;
                     case MotionEvent.ACTION_UP:
                         //保存
@@ -84,9 +133,22 @@ public class DragAddressActivity extends Activity {
                     default:
                         break;
                 }
-                //设置为false时无法获得后续动作
-                return true;
+                //允许点击监听继续响应事件
+                return false;
             }
         });
+    }
+
+    /**
+     * 重置上下浮动框
+     */
+    private void resetTopBottom(){
+        if(ivDrag.getTop()+ivDrag.getHeight()/2>appHeight/2){
+            tvTop.setVisibility(View.VISIBLE);
+            tvBottom.setVisibility(View.INVISIBLE);
+        }else{
+            tvTop.setVisibility(View.INVISIBLE);
+            tvBottom.setVisibility(View.VISIBLE);
+        }
     }
 }

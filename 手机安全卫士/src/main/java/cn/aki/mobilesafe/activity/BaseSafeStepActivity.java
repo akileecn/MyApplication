@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import cn.aki.mobilesafe.common.Constants;
 

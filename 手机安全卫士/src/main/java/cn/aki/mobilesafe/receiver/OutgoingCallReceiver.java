@@ -10,7 +10,9 @@ import cn.aki.mobilesafe.db.dao.AddressDao;
 /**
  * Created by Administrator on 2015/12/4.
  * 去电监听
+ * 由AddressService$MyOutgoingReceiver代替
  */
+@Deprecated
 public class OutgoingCallReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

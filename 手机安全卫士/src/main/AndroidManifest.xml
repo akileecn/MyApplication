@@ -24,6 +24,8 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <!-- 接收去电通知 -->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <!-- 悬浮窗 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
     android:allowBackup="true"
@@ -57,7 +59,9 @@
         <!-- 归属地 -->
         <activity android:name=".activity.AddressActivity"/>
         <!-- 归属地位置 -->
-        <activity android:name=".activity.DragAddressActivity"/>
+        <activity android:name=".activity.DragAddressActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <!-- 火箭背景 -->
+        <activity android:name=".activity.RocketBackground" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <!-- 手机启动监听 -->
         <receiver android:name=".receiver.BootCompletedReceiver">
@@ -86,11 +90,15 @@
         <service android:name=".service.LocationService"/>
         <!-- 来电去电归属地显示 -->
         <service android:name=".service.AddressService"/>
+        <!--
         <receiver android:name=".receiver.OutgoingCallReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
             </intent-filter>
         </receiver>
+        -->
+        <!-- 火箭 -->
+        <service android:name=".service.RocketService"/>
     </application>
 
 </manifest>
