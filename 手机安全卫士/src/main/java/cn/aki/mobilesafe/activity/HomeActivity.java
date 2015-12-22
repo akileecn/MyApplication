@@ -49,6 +49,9 @@ public class HomeActivity extends Activity{
                 case 0:
                     showPasswordDialog();
                     break;
+                case 1:
+                    startActivity(new Intent(HomeActivity.this,CallSafeActivity.class));
+                    break;
                 case 7:
                     startActivity(new Intent(HomeActivity.this,ToolsActivity.class));
                     break;
@@ -82,13 +85,25 @@ public class HomeActivity extends Activity{
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view=View.inflate(HomeActivity.this,R.layout.home_item,null);
-            ImageView imageView= (ImageView) view.findViewById(R.id.item_img);
-            TextView textView= (TextView) view.findViewById(R.id.item_name);
-            imageView.setImageResource(images[position]);
-            textView.setText(items[position]);
-            return view;
+            ViewHolder viewHolder;
+            if(convertView==null){
+                viewHolder=new ViewHolder();
+                convertView=View.inflate(HomeActivity.this,R.layout.home_item,null);
+                viewHolder.imageView= (ImageView) convertView.findViewById(R.id.item_img);
+                viewHolder.textView= (TextView) convertView.findViewById(R.id.item_name);
+                convertView.setTag(viewHolder);
+            }else{
+                viewHolder= (ViewHolder) convertView.getTag();
+            }
+            viewHolder.imageView.setImageResource(images[position]);
+            viewHolder.textView.setText(items[position]);
+            return convertView;
         }
+    }
+
+    static class ViewHolder{
+        ImageView imageView;
+        TextView textView;
     }
 
     /**

@@ -62,6 +62,8 @@
         <activity android:name=".activity.DragAddressActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <!-- 火箭背景 -->
         <activity android:name=".activity.RocketBackground" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <!-- 通讯卫士 -->
+        <activity android:name=".activity.CallSafeActivity"/>
 
         <!-- 手机启动监听 -->
         <receiver android:name=".receiver.BootCompletedReceiver">
@@ -99,6 +101,8 @@
         -->
         <!-- 火箭 -->
         <service android:name=".service.RocketService"/>
+        <!-- 黑名单 -->
+        <service android:name=".service.BlackListService"/>
     </application>
 
 </manifest>

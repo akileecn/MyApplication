@@ -37,4 +37,11 @@
         aki:headline="是否显示小火箭"
         aki:disable_desc="隐藏"
         aki:enable_desc="显示"/>
+    <cn.aki.mobilesafe.view.SettingItemView
+        android:id="@+id/siv_black_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        aki:headline="是否启动黑名单"
+        aki:disable_desc="关闭"
+        aki:enable_desc="启动"/>
 </LinearLayout>

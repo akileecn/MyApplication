@@ -12,6 +12,7 @@ import android.view.View;
 import cn.aki.mobilesafe.R;
 import cn.aki.mobilesafe.common.Constants;
 import cn.aki.mobilesafe.service.AddressService;
+import cn.aki.mobilesafe.service.BlackListService;
 import cn.aki.mobilesafe.service.RocketService;
 import cn.aki.mobilesafe.utils.ServiceStatusUtils;
 import cn.aki.mobilesafe.view.SettingClickView;
@@ -28,6 +29,7 @@ public class SettingActivity extends Activity {
     private SettingClickView scvAddressStyle;   //归属地样式
     private SettingClickView scvAddressLocation;    //归属地位置
     private SettingItemView sivRocket;  //火箭
+    private SettingItemView sivBlackList;  //黑名单
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +41,13 @@ public class SettingActivity extends Activity {
         scvAddressStyle= (SettingClickView) findViewById(R.id.scv_address_style);
         scvAddressLocation= (SettingClickView) findViewById(R.id.scv_address_location);
         sivRocket= (SettingItemView) findViewById(R.id.siv_rocket);
+        sivBlackList= (SettingItemView) findViewById(R.id.siv_black_list);
         initUpdate();
         initShowAddress();
         initAddressStyle();
         initAddressLocation();
         initRocket();
+        initBlackList();
     }
 
     /**
@@ -145,6 +149,25 @@ public class SettingActivity extends Activity {
                 }else{
                     sivRocket.check(true);
                     startService(new Intent(SettingActivity.this,RocketService.class));
+                }
+            }
+        });
+    }
+
+    /**
+     * 初始化黑名单
+     */
+    private void initBlackList(){
+        sivBlackList.check(ServiceStatusUtils.isActive(this,BlackListService.class));
+        sivBlackList.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(sivBlackList.isChecked()){
+                    sivBlackList.check(false);
+                    stopService(new Intent(SettingActivity.this, BlackListService.class));
+                }else{
+                    sivBlackList.check(true);
+                    startService(new Intent(SettingActivity.this, BlackListService.class));
                 }
             }
         });
