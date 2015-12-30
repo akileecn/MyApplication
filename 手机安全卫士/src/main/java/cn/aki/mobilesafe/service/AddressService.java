@@ -17,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import cn.aki.mobilesafe.R;
 import cn.aki.mobilesafe.common.Constants;
@@ -61,7 +60,6 @@ public class AddressService extends Service{
         //toast
         mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
     }
-
 
     /**
      * 来电监听器

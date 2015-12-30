@@ -49,8 +49,13 @@ public class HomeActivity extends Activity{
                 case 0:
                     showPasswordDialog();
                     break;
+                //通讯卫士
                 case 1:
                     startActivity(new Intent(HomeActivity.this,CallSafeActivity.class));
+                    break;
+                //软件管理
+                case 2:
+                    startActivity(new Intent(HomeActivity.this,AppActivity.class));
                     break;
                 case 7:
                     startActivity(new Intent(HomeActivity.this,ToolsActivity.class));
@@ -99,11 +104,12 @@ public class HomeActivity extends Activity{
             viewHolder.textView.setText(items[position]);
             return convertView;
         }
-    }
 
-    static class ViewHolder{
-        ImageView imageView;
-        TextView textView;
+        private class ViewHolder{
+            ImageView imageView;
+            TextView textView;
+        }
+
     }
 
     /**

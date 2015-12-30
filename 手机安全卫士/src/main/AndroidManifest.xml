@@ -26,6 +26,10 @@
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <!-- 悬浮窗 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!-- 挂电话 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <!-- 修改通话记录 -->
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
 
     <application
     android:allowBackup="true"
@@ -64,6 +68,8 @@
         <activity android:name=".activity.RocketBackground" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <!-- 通讯卫士 -->
         <activity android:name=".activity.CallSafeActivity"/>
+        <!-- 软件管理 -->
+        <activity android:name=".activity.AppActivity"/>
 
         <!-- 手机启动监听 -->
         <receiver android:name=".receiver.BootCompletedReceiver">
