@@ -12,5 +12,17 @@
         android:gravity="center_vertical"
         android:onClick="toAddress"
         android:text="手机归属地查询"/>
+    <Button
+        style="@style/ContentStyle"
+        android:layout_width="match_parent"
+        android:background="@drawable/button_grey_selector"
+        android:gravity="center_vertical"
+        android:onClick="backUpSms"
+        android:text="短信备份"/>
+    <ProgressBar
+        android:id="@+id/pb_back_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Horizontal"/>
 
 </LinearLayout>
