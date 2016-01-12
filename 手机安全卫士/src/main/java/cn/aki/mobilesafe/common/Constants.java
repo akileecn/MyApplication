@@ -15,6 +15,7 @@ public final class Constants {
      * 更新信息
      */
     public static final String UPDATE_URL=BASE_URL+"update.json";
+    public static final String ACTION_HOME="cn.aki.mobilesafe.action.HomeActivity";
 
     /**
      * 参数
@@ -61,6 +62,10 @@ public final class Constants {
          * 归属地y坐标
          */
         public static final String KEY_ADDRESS_LOCATION_Y="addressLocationY";
+        /**
+         * 快捷方式是否存在
+         */
+        public static final String KEY_SHORTCUT_EXISTS="shortcutExists";
 
     }
 

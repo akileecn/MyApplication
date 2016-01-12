@@ -2,17 +2,20 @@ package cn.aki.mobilesafe.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
@@ -61,6 +64,9 @@ public class SplashActivity extends Activity {
     private static final int WHAT_GO_HOME=4;
 
     private Handler handler=new MyHandler(this);
+    //快捷方式
+    private static final String ACTION_INSTALL_SHORTCUT="com.android.launcher.action.INSTALL_SHORTCUT";
+    private static final String ACTION_UNINSTALL_SHORTCUT="com.android.launcher.action.UNINSTALL_SHORTCUT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +95,8 @@ public class SplashActivity extends Activity {
         AlphaAnimation animation=new AlphaAnimation(0.3f,1f);
         animation.setDuration(2000);
         rlRoot.startAnimation(animation);
+        //创建图标
+        createShortcut();
     }
 
     /**
@@ -327,5 +335,37 @@ public class SplashActivity extends Activity {
                 }
             }
         }
+    }
+
+    /**
+     * 创建快捷方式
+     */
+    private void createShortcut(){
+        //判断快捷方式是否存在
+        boolean shortcutExists=mSharedPreferences.getBoolean(Constants.SharedPreferences.KEY_SHORTCUT_EXISTS,false);
+        if(shortcutExists){
+           return;
+        }
+        //快捷方式名
+        String shortcutName=getString(R.string.app_name);
+        //回调intent(只能使用隐式的)
+        Intent callbackIntent=new Intent(Constants.ACTION_HOME);
+        callbackIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        /**1.删除*/
+        Intent uninstallIntent=new Intent(ACTION_UNINSTALL_SHORTCUT);
+        uninstallIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,shortcutName);
+        uninstallIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT,callbackIntent);
+        sendBroadcast(uninstallIntent);
+        /**2.创建*/
+        Intent installIntent=new Intent(ACTION_INSTALL_SHORTCUT);
+        installIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,shortcutName);
+        //不重复创建(不一定有效)
+//        shortcutIntent.putExtra("duplicate", false);
+        //图标
+        Parcelable icon=Intent.ShortcutIconResource.fromContext(this,R.mipmap.ic_launcher);
+        installIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,icon);
+        installIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT,callbackIntent);
+        sendBroadcast(installIntent);
+        mSharedPreferences.edit().putBoolean(Constants.SharedPreferences.KEY_SHORTCUT_EXISTS,true).apply();
     }
 }

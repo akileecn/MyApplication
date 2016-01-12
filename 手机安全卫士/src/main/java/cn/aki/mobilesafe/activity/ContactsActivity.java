@@ -33,7 +33,7 @@ public class ContactsActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
         ListView lvContacts= (ListView) findViewById(R.id.lv_contacts);
-        lvContacts.setAdapter(new SimpleAdapter(this,getContactsList(),R.layout.contact_item,new String[]{KEY_NAME,KEY_PHONE},new int[]{R.id.tv_name,R.id.tv_phone}));
+        lvContacts.setAdapter(new SimpleAdapter(this,getContactsList(),R.layout.item_contact,new String[]{KEY_NAME,KEY_PHONE},new int[]{R.id.tv_name,R.id.tv_phone}));
         lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -30,6 +30,9 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <!-- 修改通话记录 -->
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
+    <!-- 创建快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
 
     <application
     android:allowBackup="true"
@@ -46,7 +49,13 @@
             </intent-filter>
         </activity>
         <!-- 主页 -->
-        <activity android:name=".activity.HomeActivity"/>
+        <activity android:name=".activity.HomeActivity">
+            <!-- 用户快捷方式打开应用 -->
+            <intent-filter>
+                <action android:name="cn.aki.mobilesafe.action.HomeActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <!-- 设置中心 -->
         <activity android:name=".activity.SettingActivity"/>
         <!-- 手机防盗 -->
@@ -70,6 +79,8 @@
         <activity android:name=".activity.CallSafeActivity"/>
         <!-- 软件管理 -->
         <activity android:name=".activity.AppActivity"/>
+        <!-- 进程管理 -->
+        <activity android:name=".activity.ProgressActivity"/>
 
         <!-- 手机启动监听 -->
         <receiver android:name=".receiver.BootCompletedReceiver">

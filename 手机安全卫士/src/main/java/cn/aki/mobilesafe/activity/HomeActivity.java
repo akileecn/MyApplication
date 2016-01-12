@@ -57,6 +57,11 @@ public class HomeActivity extends Activity{
                 case 2:
                     startActivity(new Intent(HomeActivity.this,AppActivity.class));
                     break;
+                //进程管理
+                case 3:
+                    startActivity(new Intent(HomeActivity.this,ProgressActivity.class));
+                    break;
+                //高级工具
                 case 7:
                     startActivity(new Intent(HomeActivity.this,ToolsActivity.class));
                     break;
@@ -93,7 +98,7 @@ public class HomeActivity extends Activity{
             ViewHolder viewHolder;
             if(convertView==null){
                 viewHolder=new ViewHolder();
-                convertView=View.inflate(HomeActivity.this,R.layout.home_item,null);
+                convertView=View.inflate(HomeActivity.this,R.layout.item_home,null);
                 viewHolder.imageView= (ImageView) convertView.findViewById(R.id.item_img);
                 viewHolder.textView= (TextView) convertView.findViewById(R.id.item_name);
                 convertView.setTag(viewHolder);
