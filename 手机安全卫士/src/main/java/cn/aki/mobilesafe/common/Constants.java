@@ -66,6 +66,14 @@ public final class Constants {
          * 快捷方式是否存在
          */
         public static final String KEY_SHORTCUT_EXISTS="shortcutExists";
+        /**
+         * 显示系统进程
+         */
+        public static final String KEY_SHOW_SYSTEM_PROGRESS="showSystemProgress";
+        /**
+         * 清理内存定时任务时间间隔
+         */
+        public static final String KEY_TASK_INTERVAL="taskInterval";
 
     }
 
@@ -114,5 +122,23 @@ public final class Constants {
          */
         public static final int[] DRAWABLE={R.drawable.call_locate_blue,R.drawable.call_locate_gray
                 ,R.drawable.call_locate_green,R.drawable.call_locate_orange,R.drawable.call_locate_white};
+    }
+
+    /**
+     * 清理内存任务时间间隔
+     */
+    public static final class TaskInterval{
+        /**
+         * 描述
+         */
+        public static final String[] DESC={"锁屏时自动清理","2小时","4小时","6小时"};
+        /**
+         * 时间间隔索引-锁屏时清理
+         */
+        public static final int WHICH_LOCK_SCREEN=0;
+        /**
+         * 时间间隔
+         */
+        public static final int[] INTERVAL={-1,2,4,6};
     }
 }
