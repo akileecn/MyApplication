@@ -2,14 +2,12 @@ package cn.aki.mobilesafe.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -73,6 +71,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         //初始化数据库
         copyDb("address.db");
+        copyDb("antivirus.db");
         //初始化
         x.Ext.init(getApplication());
         x.Ext.setDebug(true);
@@ -349,7 +348,7 @@ public class SplashActivity extends Activity {
         //快捷方式名
         String shortcutName=getString(R.string.app_name);
         //回调intent(只能使用隐式的)
-        Intent callbackIntent=new Intent(Constants.ACTION_HOME);
+        Intent callbackIntent=new Intent(Constants.Action.HOME);
         callbackIntent.addCategory(Intent.CATEGORY_DEFAULT);
         /**1.删除*/
         Intent uninstallIntent=new Intent(ACTION_UNINSTALL_SHORTCUT);

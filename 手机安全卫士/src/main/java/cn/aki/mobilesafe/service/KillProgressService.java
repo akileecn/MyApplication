@@ -1,6 +1,5 @@
 package cn.aki.mobilesafe.service;
 
-import android.app.ActivityManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,11 +9,9 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.aki.mobilesafe.bean.ProgressInfo;
 import cn.aki.mobilesafe.common.Constants;
 import cn.aki.mobilesafe.manager.ProgressInfoManager;
 
@@ -25,6 +22,7 @@ import cn.aki.mobilesafe.manager.ProgressInfoManager;
 public class KillProgressService extends Service{
     private Timer mTimer;
     private BroadcastReceiver mReceiver;
+    private ProgressInfoManager mProgressInfoManager;
     private int times=0;
     @Nullable
     @Override
@@ -35,6 +33,7 @@ public class KillProgressService extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
+        mProgressInfoManager=new ProgressInfoManager(this);
         SharedPreferences pref = getSharedPreferences(Constants.SharedPreferences.FILE_CONFIG, Context.MODE_PRIVATE);
         int which= pref.getInt(Constants.SharedPreferences.KEY_TASK_INTERVAL, 0);
         if(which==Constants.TaskInterval.WHICH_LOCK_SCREEN){
@@ -63,16 +62,7 @@ public class KillProgressService extends Service{
     private void killProgress(){
         times++;
         System.err.println(">>>>>>>>>>>>>>start kill progress "+times);
-        ActivityManager am= (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        ProgressInfoManager pim=new ProgressInfoManager(this);
-        List<ProgressInfo> piList=pim.getList();
-        for(ProgressInfo pi:piList){
-            String progressName=pi.getProgressName();
-            //干掉自己以外所有后台进程
-            if(!getPackageName().equals(progressName)){
-                am.killBackgroundProcesses(progressName);
-            }
-        }
+        mProgressInfoManager.killOthers();
     }
 
     @Override

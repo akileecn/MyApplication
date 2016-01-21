@@ -54,7 +54,7 @@
         <activity android:name=".activity.HomeActivity">
             <!-- 用户快捷方式打开应用 -->
             <intent-filter>
-                <action android:name="cn.aki.mobilesafe.action.HomeActivity"/>
+                <action android:name="cn.aki.mobilesafe.action.HOME"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
@@ -85,6 +85,8 @@
         <activity android:name=".activity.ProgressActivity"/>
         <!-- 进程管理设置 -->
         <activity android:name=".activity.ProgressSettingActivity"/>
+        <!-- 杀毒 -->
+        <activity android:name=".activity.AntivirusActivity"/>
 
         <!-- 手机启动监听 -->
         <receiver android:name=".receiver.BootCompletedReceiver">
@@ -108,6 +110,20 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+        <!-- 进程窗口小部件 -->
+        <receiver android:name=".receiver.ProgressAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/progress_appwidget_info" />
+        </receiver>
+        <!-- 杀死进程,响应widget按钮 -->
+        <receiver android:name=".receiver.KillProgressReceiver">
+            <intent-filter>
+                <action android:name="cn.aki.mobilesafe.action.KILL_PROGRESS"/>
+            </intent-filter>
+        </receiver>
 
         <!-- 定位 -->
         <service android:name=".service.LocationService"/>
@@ -126,6 +142,8 @@
         <service android:name=".service.BlackListService"/>
         <!-- 清理进程 -->
         <service android:name=".service.KillProgressService"/>
+        <!-- 进程widget服务 -->
+        <service android:name=".service.ProgressAppWidgetService"/>
     </application>
 
 </manifest>

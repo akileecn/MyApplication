@@ -21,14 +21,18 @@ import cn.aki.mobilesafe.bean.ProgressInfo;
 public class ProgressInfoManager {
 
     private Context mContext;
+    private ActivityManager mActivityManager;
     public ProgressInfoManager(Context context){
         mContext=context;
+        mActivityManager= (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
     }
 
+    /**
+     * 获得进程信息
+     */
     public List<ProgressInfo> getList(){
-        ActivityManager activityManager= (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         PackageManager packageManager=mContext.getPackageManager();
-        List<RunningAppProcessInfo> runningAppProcessInfoList = activityManager.getRunningAppProcesses();
+        List<RunningAppProcessInfo> runningAppProcessInfoList = mActivityManager.getRunningAppProcesses();
         List<ProgressInfo> progressInfoList=new ArrayList<>();
         for(RunningAppProcessInfo runningAppProcessInfo:runningAppProcessInfoList){
             ProgressInfo progressInfo=new ProgressInfo();
@@ -49,10 +53,27 @@ public class ProgressInfoManager {
                 progressInfo.setIsSystem(true);
             }
             //内存使用大小
-            Debug.MemoryInfo[] processMemoryInfo = activityManager.getProcessMemoryInfo(new int[]{runningAppProcessInfo.pid});
+            Debug.MemoryInfo[] processMemoryInfo = mActivityManager.getProcessMemoryInfo(new int[]{runningAppProcessInfo.pid});
             progressInfo.setMemorySize((long)processMemoryInfo[0].getTotalPrivateDirty()<<10);
             progressInfoList.add(progressInfo);
         }
         return progressInfoList;
     }
+
+    /**
+     * 清理除自己以外的进程
+     */
+    public void killOthers(){
+        List<RunningAppProcessInfo> piList = mActivityManager.getRunningAppProcesses();
+        String selfPackageName=mContext.getPackageName();
+        for(RunningAppProcessInfo pi:piList){
+            String progressName=pi.processName;
+            mActivityManager.killBackgroundProcesses(progressName);
+            //干掉自己以外所有后台进程
+            if(!selfPackageName.equals(progressName)) {
+                mActivityManager.killBackgroundProcesses(progressName);
+            }
+        }
+    }
+
 }

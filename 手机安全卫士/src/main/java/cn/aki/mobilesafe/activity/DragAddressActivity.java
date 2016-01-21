@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import cn.aki.mobilesafe.R;
 import cn.aki.mobilesafe.common.Constants;

@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +18,7 @@ import java.util.regex.Pattern;
 public class SystemInfoUtils {
     /**
      * 获得内存信息
-     * @return {总内存,可用内存}
+     * @return {可用内存,总内存}
      */
     public static long[] getMemoryInfo(Context context){
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -57,5 +58,14 @@ public class SystemInfoUtils {
             }
         }
         return 0;
+    }
+
+    /**
+     * 获得活动进程数
+     */
+    public static int getRunningProgressCount(Context context){
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfoList = am.getRunningAppProcesses();
+        return runningAppProcessInfoList.size();
     }
 }

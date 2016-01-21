@@ -7,6 +7,7 @@ import cn.aki.mobilesafe.R;
  * 常量
  */
 public final class Constants {
+    public static final String TAG="akiTag";
     /**
      * 域名
      */
@@ -15,7 +16,21 @@ public final class Constants {
      * 更新信息
      */
     public static final String UPDATE_URL=BASE_URL+"update.json";
-    public static final String ACTION_HOME="cn.aki.mobilesafe.action.HomeActivity";
+
+    /**
+     * action常量
+     */
+    public static final class Action{
+        private static final String BASE="cn.aki.mobilesafe.action.";
+        /**
+         * 打开首页
+         */
+        public static final String HOME=BASE+"HOME";
+        /**
+         * 启动清理进程任务
+         */
+        public static final String KILL_PROGRESS=BASE+"KILL_PROGRESS";
+    }
 
     /**
      * 参数
@@ -107,6 +122,10 @@ public final class Constants {
          * 归属地
          */
         public static final String Address="data/data/cn.aki.mobilesafe/files/address.db";
+        /**
+         * 杀毒
+         */
+        public static final String AntiVirus="data/data/cn.aki.mobilesafe/files/antivirus.db";
     }
 
     /**
