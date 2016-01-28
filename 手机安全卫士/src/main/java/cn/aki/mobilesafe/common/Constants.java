@@ -30,6 +30,10 @@ public final class Constants {
          * 启动清理进程任务
          */
         public static final String KILL_PROGRESS=BASE+"KILL_PROGRESS";
+        /**
+         * 应用锁排序指定应用
+         */
+        public static final String APP_LOCK_EXCLUDE=BASE+"APP_LOCK_EXCLUDE";
     }
 
     /**

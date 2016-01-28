@@ -201,7 +201,7 @@ public class ProgressActivity extends Activity{
                     convertView=View.inflate(ProgressActivity.this,R.layout.item_progress_info,null);
                     viewHolder=new ViewHolder();
                     viewHolder.ivIcon= (ImageView) convertView.findViewById(R.id.iv_icon);
-                    viewHolder.tvApkName= (TextView) convertView.findViewById(R.id.tv_apk_name);
+                    viewHolder.tvAppName= (TextView) convertView.findViewById(R.id.tv_app_name);
                     viewHolder.tvMemoryCount= (TextView) convertView.findViewById(R.id.tv_memory_count);
                     viewHolder.cbCheck= (CheckBox) convertView.findViewById(R.id.cb_check);
                     convertView.setTag(viewHolder);
@@ -210,7 +210,7 @@ public class ProgressActivity extends Activity{
                 }
                 //保证获取的对象一致
                 ProgressInfo pi= (ProgressInfo) item;
-                viewHolder.tvApkName.setText(pi.getAppName());
+                viewHolder.tvAppName.setText(pi.getAppName());
                 viewHolder.tvMemoryCount.setText("内存占用:" + Formatter.formatFileSize(ProgressActivity.this, pi.getMemorySize()));
                 viewHolder.ivIcon.setImageDrawable(pi.getIcon());
                 //隐藏自身的checkBox
@@ -235,7 +235,7 @@ public class ProgressActivity extends Activity{
 
         private class ViewHolder{
             private ImageView ivIcon;
-            private TextView tvApkName;
+            private TextView tvAppName;
             private TextView tvMemoryCount;
             private CheckBox cbCheck;
         }

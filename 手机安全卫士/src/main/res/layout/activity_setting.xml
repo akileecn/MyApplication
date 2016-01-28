@@ -44,4 +44,11 @@
         aki:headline="是否启动黑名单"
         aki:disable_desc="关闭"
         aki:enable_desc="启动"/>
+    <cn.aki.mobilesafe.view.SettingItemView
+        android:id="@+id/siv_app_lock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        aki:headline="是否启动程序锁"
+        aki:disable_desc="关闭"
+        aki:enable_desc="启动"/>
 </LinearLayout>

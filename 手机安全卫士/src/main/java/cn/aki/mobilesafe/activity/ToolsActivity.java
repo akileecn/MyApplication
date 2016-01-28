@@ -25,8 +25,19 @@ public class ToolsActivity extends Activity {
         pbBackUp= (ProgressBar) findViewById(R.id.pb_back_up);
     }
 
+    /**
+     * 跳转到归属地查询
+     */
     public void toAddress(View view){
         startActivity(new Intent(this, AddressActivity.class));
+        finish();
+    }
+
+    /**
+     * 跳转到程序锁
+     */
+    public void toAppLock(View view){
+        startActivity(new Intent(this,AppLockActivity.class));
         finish();
     }
 

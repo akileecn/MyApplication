@@ -2,6 +2,7 @@ package cn.aki.mobilesafe.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.View;
 import cn.aki.mobilesafe.R;
 import cn.aki.mobilesafe.common.Constants;
 import cn.aki.mobilesafe.service.AddressService;
+import cn.aki.mobilesafe.service.AppLockService;
 import cn.aki.mobilesafe.service.BlackListService;
 import cn.aki.mobilesafe.service.RocketService;
 import cn.aki.mobilesafe.utils.ServiceStatusUtils;
@@ -24,30 +26,33 @@ import cn.aki.mobilesafe.view.SettingItemView;
  */
 public class SettingActivity extends Activity {
     private SettingItemView sivUpdate;//自动更新
-    private SettingItemView sivShowAddress; //电话归属地
+//    private SettingItemView sivShowAddress; //电话归属地`
     private SharedPreferences mPref;//参数
     private SettingClickView scvAddressStyle;   //归属地样式
     private SettingClickView scvAddressLocation;    //归属地位置
-    private SettingItemView sivRocket;  //火箭
-    private SettingItemView sivBlackList;  //黑名单
+//    private SettingItemView sivRocket;  //火箭
+//    private SettingItemView sivBlackList;  //黑名单
+//    private SettingItemView sivAppLock; //程序锁
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         sivUpdate= (SettingItemView) findViewById(R.id.siv_update);
-        sivShowAddress= (SettingItemView) findViewById(R.id.siv_show_address);
         mPref=getSharedPreferences(Constants.SharedPreferences.FILE_CONFIG, Context.MODE_PRIVATE);
         scvAddressStyle= (SettingClickView) findViewById(R.id.scv_address_style);
         scvAddressLocation= (SettingClickView) findViewById(R.id.scv_address_location);
-        sivRocket= (SettingItemView) findViewById(R.id.siv_rocket);
-        sivBlackList= (SettingItemView) findViewById(R.id.siv_black_list);
         initUpdate();
-        initShowAddress();
         initAddressStyle();
         initAddressLocation();
-        initRocket();
-        initBlackList();
+        //电话归属地显示
+        initSiv(R.id.siv_show_address,AddressService.class);
+        //小火箭
+        initSiv(R.id.siv_rocket,RocketService.class);
+        //黑名单
+        initSiv(R.id.siv_black_list, BlackListService.class);
+        //程序锁
+        initSiv(R.id.siv_app_lock, AppLockService.class);
     }
 
     /**
@@ -71,30 +76,10 @@ public class SettingActivity extends Activity {
     }
 
     /**
-     * 初始化电话归属地显示
-     */
-    private void initShowAddress(){
-        //根据服务是否启动判断状态
-        sivShowAddress.check(ServiceStatusUtils.isActive(this, AddressService.class));
-        sivShowAddress.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(sivShowAddress.isChecked()){
-                    sivShowAddress.check(false);
-                    stopService(new Intent(SettingActivity.this, AddressService.class));
-                }else{
-                    sivShowAddress.check(true);
-                    startService(new Intent(SettingActivity.this, AddressService.class));
-                }
-            }
-        });
-    }
-
-    /**
      * 初始化归属地样式
      */
     private void initAddressStyle(){
-        int style=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_STYLE,0);
+        int style=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_STYLE, 0);
         scvAddressStyle.setDesc(Constants.AddressStyle.DESC[style]);
         scvAddressStyle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +94,7 @@ public class SettingActivity extends Activity {
      */
     private void showAddressStyleDialog(){
         AlertDialog.Builder builder= new AlertDialog.Builder(this);
-        int style=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_STYLE,0);
+        int style=mPref.getInt(Constants.SharedPreferences.KEY_ADDRESS_STYLE, 0);
         builder.setSingleChoiceItems(Constants.AddressStyle.DESC, style, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -136,38 +121,23 @@ public class SettingActivity extends Activity {
     }
 
     /**
-     * 初始化火箭
+     * 初始化SettingItemView的公共方法
+     * @param sivId SettingItemView的ID
+     * @param serviceClass 对应服务class
      */
-    private void initRocket(){
-        sivRocket.check(ServiceStatusUtils.isActive(this,RocketService.class));
-        sivRocket.setOnClickListener(new View.OnClickListener() {
+    private void initSiv(int sivId, final Class<? extends Service> serviceClass){
+        final SettingItemView siv= (SettingItemView) findViewById(sivId);
+        //根据服务是否启动判断状态
+        siv.check(ServiceStatusUtils.isActive(this,serviceClass));
+        siv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sivRocket.isChecked()){
-                    sivRocket.check(false);
-                    stopService(new Intent(SettingActivity.this, RocketService.class));
+                if(siv.isChecked()){
+                    siv.check(false);
+                    stopService(new Intent(SettingActivity.this,serviceClass));
                 }else{
-                    sivRocket.check(true);
-                    startService(new Intent(SettingActivity.this,RocketService.class));
-                }
-            }
-        });
-    }
-
-    /**
-     * 初始化黑名单
-     */
-    private void initBlackList(){
-        sivBlackList.check(ServiceStatusUtils.isActive(this,BlackListService.class));
-        sivBlackList.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(sivBlackList.isChecked()){
-                    sivBlackList.check(false);
-                    stopService(new Intent(SettingActivity.this, BlackListService.class));
-                }else{
-                    sivBlackList.check(true);
-                    startService(new Intent(SettingActivity.this, BlackListService.class));
+                    siv.check(true);
+                    startService(new Intent(SettingActivity.this,serviceClass));
                 }
             }
         });

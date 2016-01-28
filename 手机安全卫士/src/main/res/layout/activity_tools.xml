@@ -6,17 +6,11 @@
         style="@style/TitleStyle"
         android:text="高级工具"/>
     <Button
-        style="@style/ContentStyle"
-        android:layout_width="match_parent"
-        android:background="@drawable/button_grey_selector"
-        android:gravity="center_vertical"
+        style="@style/ToolItemStyle"
         android:onClick="toAddress"
         android:text="手机归属地查询"/>
     <Button
-        style="@style/ContentStyle"
-        android:layout_width="match_parent"
-        android:background="@drawable/button_grey_selector"
-        android:gravity="center_vertical"
+        style="@style/ToolItemStyle"
         android:onClick="backUpSms"
         android:text="短信备份"/>
     <ProgressBar
@@ -24,5 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@android:style/Widget.ProgressBar.Horizontal"/>
-
+    <Button
+        style="@style/ToolItemStyle"
+        android:text="程序锁"
+        android:onClick="toAppLock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -2,6 +2,7 @@ package cn.aki.mobilesafe.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
@@ -59,8 +60,10 @@ public class SettingItemView extends RelativeLayout {
         cbCheck.setChecked(enable);
         if(enable){
             tvDesc.setText(mEnableDesc);
+            tvDesc.setTextColor(Color.GREEN);
         }else{
             tvDesc.setText(mDisableDesc);
+            tvDesc.setTextColor(Color.RED);
         }
     }
 

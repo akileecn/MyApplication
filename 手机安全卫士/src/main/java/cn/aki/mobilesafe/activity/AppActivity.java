@@ -192,7 +192,7 @@ public class AppActivity extends Activity {
                     convertView=View.inflate(AppActivity.this,R.layout.item_app_info,null);
                     viewHolder=new ViewHolder();
                     viewHolder.ivIcon= (ImageView) convertView.findViewById(R.id.iv_icon);
-                    viewHolder.tvApkName= (TextView) convertView.findViewById(R.id.tv_apk_name);
+                    viewHolder.tvAppName= (TextView) convertView.findViewById(R.id.tv_app_name);
                     viewHolder.tvLocation= (TextView) convertView.findViewById(R.id.tv_location);
                     viewHolder.tvSize= (TextView) convertView.findViewById(R.id.tv_size);
                     convertView.setTag(viewHolder);
@@ -202,7 +202,7 @@ public class AppActivity extends Activity {
                 //保证获取的对象一致
                 AppInfo appInfo= (AppInfo) getItem(position);
                 viewHolder.tvLocation.setText(appInfo.getLocation());
-                viewHolder.tvApkName.setText(appInfo.getApkName());
+                viewHolder.tvAppName.setText(appInfo.getAppName());
                 viewHolder.tvSize.setText(Formatter.formatFileSize(AppActivity.this, appInfo.getSize()));
                 viewHolder.ivIcon.setImageDrawable(appInfo.getIcon());
                 return convertView;
@@ -211,7 +211,7 @@ public class AppActivity extends Activity {
 
         private class ViewHolder{
             private ImageView ivIcon;
-            private TextView tvApkName;
+            private TextView tvAppName;
             private TextView tvLocation;
             private TextView tvSize;
         }
@@ -241,7 +241,7 @@ public class AppActivity extends Activity {
                     intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
                     //各手机软件助手为解析https://play.google.com/store/apps/details?id=开头的连接
                     intent.putExtra(Intent.EXTRA_TEXT
-                            , "Hi！推荐您使用软件：" + mClickedAppInfo.getApkName() + "下载地址:https://play.google.com/store/apps/details?id=" + packageName);
+                            , "Hi！推荐您使用软件：" + mClickedAppInfo.getAppName() + "下载地址:https://play.google.com/store/apps/details?id=" + packageName);
                     break;
                 case R.id.tv_detail:
                     intent=new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.parse("package:"+packageName));

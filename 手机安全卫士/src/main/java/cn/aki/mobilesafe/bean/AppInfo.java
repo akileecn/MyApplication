@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
  */
 public class AppInfo {
     private Drawable icon;  //图标
-    private String apkName; //应用名
+    private String appName; //应用名
     private String packageName; //包名
     private Long size;  //大小
     private Boolean isSystem;   //是否系统应用
@@ -22,12 +22,12 @@ public class AppInfo {
         this.icon = icon;
     }
 
-    public String getApkName() {
-        return apkName;
+    public String getAppName() {
+        return appName;
     }
 
-    public void setApkName(String apkName) {
-        this.apkName = apkName;
+    public void setAppName(String appName) {
+        this.appName = appName;
     }
 
     public String getPackageName() {
@@ -73,7 +73,7 @@ public class AppInfo {
     @Override
     public String toString() {
         return "AppInfo{" +
-                "apkName='" + apkName + '\'' +
+                "appName='" + appName + '\'' +
                 ", packageName='" + packageName + '\'' +
                 ", size=" + size +
                 ", isSystem=" + isSystem +

@@ -37,28 +37,28 @@
             android:text="全选"
             android:layout_weight="1"
             android:onClick="selectAll"
-            android:background="@drawable/button_light_green_selector"
+            android:background="@drawable/selector_btn_light_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
             android:text="反选"
             android:layout_weight="1"
             android:onClick="selectOpposite"
-            android:background="@drawable/button_light_green_selector"
+            android:background="@drawable/selector_btn_light_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
             android:text="清理"
             android:layout_weight="1"
             android:onClick="killProgress"
-            android:background="@drawable/button_light_green_selector"
+            android:background="@drawable/selector_btn_light_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
             android:text="设置"
             android:layout_weight="1"
             android:onClick="toSetting"
-            android:background="@drawable/button_light_green_selector"
+            android:background="@drawable/selector_btn_light_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

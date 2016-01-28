@@ -35,6 +35,10 @@
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
     <!-- 杀死后台进程 -->
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+    <!-- 获得任务栈 -->
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <!-- 获得应用大小 -->
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
 
     <application
     android:allowBackup="true"
@@ -87,6 +91,13 @@
         <activity android:name=".activity.ProgressSettingActivity"/>
         <!-- 杀毒 -->
         <activity android:name=".activity.AntivirusActivity"/>
+        <!-- 程序锁 -->
+        <activity android:name=".activity.AppLockActivity"/>
+        <!-- 程序锁输入密码 -->
+        <activity android:name=".activity.AppLockPasswordActivity"/>
+        <!-- 清理缓存 -->
+        <activity android:name=".activity.CleanCacheActivity"/>
+
 
         <!-- 手机启动监听 -->
         <receiver android:name=".receiver.BootCompletedReceiver">
@@ -144,6 +155,8 @@
         <service android:name=".service.KillProgressService"/>
         <!-- 进程widget服务 -->
         <service android:name=".service.ProgressAppWidgetService"/>
+        <!-- 程序锁(看门狗) -->
+        <service android:name=".service.AppLockService"/>
     </application>
 
 </manifest>

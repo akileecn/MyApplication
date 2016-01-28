@@ -11,6 +11,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!-- 标题 -->
     <style name="TitleStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -19,6 +20,7 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <!-- 内容 -->
     <style name="ContentStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -26,28 +28,31 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <!-- 下一页按钮 -->
     <style name="NextButtonStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:background">@drawable/button_green_selector</item>
+        <item name="android:background">@drawable/selector_btn_green</item>
         <item name="android:drawableRight">@drawable/next</item>
         <item name="android:onClick">next</item>
         <item name="android:text">下一页</item>
     </style>
 
+    <!-- 上一页按钮 -->
     <style name="PreviousButtonStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:background">@drawable/button_green_selector</item>
+        <item name="android:background">@drawable/selector_btn_green</item>
         <item name="android:drawableLeft">@drawable/previous</item>
         <item name="android:onClick">previous</item>
         <item name="android:text">上一页</item>
     </style>
 
+    <!-- 应用弹出操作菜单 -->
     <style name="PopupAppStyle">
         <item name="android:gravity">center</item>
         <item name="android:textSize">15sp</item>
@@ -55,6 +60,13 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
+    </style>
+
+    <!-- 高级工具条目 -->
+    <style name="ToolItemStyle" parent="ContentStyle">
+        <item name="android:background">@drawable/selector_btn_grey</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
 </resources>
