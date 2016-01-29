@@ -39,6 +39,8 @@
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <!-- 获得应用大小 -->
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
+    <!-- 清理缓存 -->
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"/>
 
     <application
     android:allowBackup="true"
@@ -94,9 +96,11 @@
         <!-- 程序锁 -->
         <activity android:name=".activity.AppLockActivity"/>
         <!-- 程序锁输入密码 -->
-        <activity android:name=".activity.AppLockPasswordActivity"/>
+        <activity android:name=".activity.AppLockPasswordActivity" android:launchMode="singleInstance"/>
         <!-- 清理缓存 -->
         <activity android:name=".activity.CleanCacheActivity"/>
+        <!-- 流量统计 -->
+        <activity android:name=".activity.TrafficActivity"/>
 
 
         <!-- 手机启动监听 -->

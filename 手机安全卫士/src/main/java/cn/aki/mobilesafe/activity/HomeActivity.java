@@ -45,41 +45,49 @@ public class HomeActivity extends Activity{
         glList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (position){
-                case 0:
-                    showPasswordDialog();
-                    break;
-                //通讯卫士
-                case 1:
-                    startActivity(new Intent(HomeActivity.this,CallSafeActivity.class));
-                    break;
-                //软件管理
-                case 2:
-                    startActivity(new Intent(HomeActivity.this,AppActivity.class));
-                    break;
-                //进程管理
-                case 3:
-                    startActivity(new Intent(HomeActivity.this,ProgressActivity.class));
-                    break;
-                //手机杀毒
-                case 5:
-                    startActivity(new Intent(HomeActivity.this,AntivirusActivity.class));
-                    break;
-                //清理缓存
-                case 6:
-                    startActivity(new Intent(HomeActivity.this,CleanCacheActivity.class));
-                    break;
-                //高级工具
-                case 7:
-                    startActivity(new Intent(HomeActivity.this,ToolsActivity.class));
-                    break;
-                //设置中心
-                case 8:
-                    startActivity(new Intent(HomeActivity.this,SettingActivity.class));
-                    break;
-                default:
-                    break;
-            }
+                Class<? extends Activity> activityClass=null;
+                switch (position){
+                    case 0:
+                        showPasswordDialog();
+                        break;
+                    //通讯卫士
+                    case 1:
+                        activityClass=CallSafeActivity.class;
+                        break;
+                    //软件管理
+                    case 2:
+                        activityClass=AppActivity.class;
+                        break;
+                    //进程管理
+                    case 3:
+                        activityClass=ProgressActivity.class;
+                        break;
+                    //流量统计
+                    case 4:
+                        activityClass=TrafficActivity.class;
+                        break;
+                    //手机杀毒
+                    case 5:
+                        activityClass=AntivirusActivity.class;
+                        break;
+                    //清理缓存
+                    case 6:
+                        activityClass=CleanCacheActivity.class;
+                        break;
+                    //高级工具
+                    case 7:
+                        activityClass=ToolsActivity.class;
+                        break;
+                    //设置中心
+                    case 8:
+                        activityClass=SettingActivity.class;
+                        break;
+                    default:
+                        break;
+                }
+                if(activityClass!=null){
+                    startActivity(new Intent(HomeActivity.this,activityClass));
+                }
             }
         });
     }

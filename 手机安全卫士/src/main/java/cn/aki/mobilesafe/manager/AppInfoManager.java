@@ -34,86 +34,121 @@ public class AppInfoManager {
      * @return  应用信息集合
      */
     public List<AppInfo> getList(){
-        List<AppInfo> appInfoList=new ArrayList<>();
-        List<PackageInfo> installedPackageList = mPackageManager.getInstalledPackages(0);
-        for(PackageInfo packageInfo:installedPackageList){
-            AppInfo appInfo=new AppInfo();
-            //应用名
-            appInfo.setAppName(packageInfo.applicationInfo.loadLabel(mPackageManager).toString());
-            //图标
-            appInfo.setIcon(packageInfo.applicationInfo.loadIcon(mPackageManager));
-            //包名
-            appInfo.setPackageName(packageInfo.packageName);
-            int flags=packageInfo.applicationInfo.flags;
-            //是否安装在SD卡
-            appInfo.setIsSD((flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0);
-            //是否为系统应用
-            appInfo.setIsSystem((flags&ApplicationInfo.FLAG_SYSTEM)!=0);
-            //应用大小(不准确)
-            String sourceDir = packageInfo.applicationInfo.sourceDir;
-            appInfo.setSize(new File(sourceDir).length());
-            appInfoList.add(appInfo);
-        }
-        return appInfoList;
+        return baseGetList(new OnLoadListener<AppInfo>() {
+            @Override
+            public void onLooping(PackageInfo packageInfo, List<AppInfo> appInfoList) {
+                AppInfo appInfo=new AppInfo();
+                initAppBaseInfo(packageInfo,appInfo);
+                int flags=packageInfo.applicationInfo.flags;
+                //是否安装在SD卡
+                appInfo.setIsSD((flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0);
+                //是否为系统应用
+                appInfo.setIsSystem((flags&ApplicationInfo.FLAG_SYSTEM)!=0);
+                //应用大小(不准确)
+                String sourceDir = packageInfo.applicationInfo.sourceDir;
+                appInfo.setSize(new File(sourceDir).length());
+                appInfoList.add(appInfo);
+            }
+
+        });
     }
 
     /**
      * 获得应用信息(是否被锁)
      * @param isLocked 是否被锁
      */
-    public List<AppInfo> getLockList(boolean isLocked){
-        AppLockDao dao=new AppLockDao(mContext);
-        List<AppInfo> appInfoList=new ArrayList<>();
-        List<PackageInfo> installedPackageList = mPackageManager.getInstalledPackages(0);
-        for(PackageInfo packageInfo:installedPackageList){
-            //true取在数据库的,false取不在的
-            if((isLocked&&dao.exists(packageInfo.packageName))
-                    ||(!isLocked&&!dao.exists(packageInfo.packageName))){
-                AppInfo appInfo=new AppInfo();
-                //应用名
-                appInfo.setAppName(packageInfo.applicationInfo.loadLabel(mPackageManager).toString());
-                //图标
-                appInfo.setIcon(packageInfo.applicationInfo.loadIcon(mPackageManager));
-                //包名
-                appInfo.setPackageName(packageInfo.packageName);
-                appInfoList.add(appInfo);
+    public List<AppInfo> getLockList(final boolean isLocked){
+        final AppLockDao dao=new AppLockDao(mContext);
+        return baseGetList(new OnLoadListener<AppInfo>() {
+            @Override
+            public void onLooping(PackageInfo packageInfo, List<AppInfo> appInfoList) {
+                //true取在数据库的,false取不在的
+                if((isLocked&&dao.exists(packageInfo.packageName))
+                        ||(!isLocked&&!dao.exists(packageInfo.packageName))){
+                    AppInfo appInfo=new AppInfo();
+                    initAppBaseInfo(packageInfo,appInfo);
+                    appInfoList.add(appInfo);
+                }
             }
-        }
-        return appInfoList;
+        });
     }
 
     /**
      * 获得带缓存大小的应用信息
      */
     public List<AppInfo> getCacheList(){
-        final List<AppInfo> appInfoList=new ArrayList<>();
-        List<PackageInfo> installedPackageList = mPackageManager.getInstalledPackages(0);
-        for(PackageInfo packageInfo:installedPackageList){
-            final AppInfo appInfo=new AppInfo();
+        return baseGetList(new OnLoadListener<AppInfo>() {
+            @Override
+            public void onLooping(final PackageInfo packageInfo, final List<AppInfo> appInfoList) {
+                //通过反射调用被hide的方法,获得缓存大小
+                try {
+                    Method method=PackageManager.class.getDeclaredMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
+                    method.invoke(mPackageManager, packageInfo.packageName, new IPackageStatsObserver.Stub() {
+                        @Override
+                        public void onGetStatsCompleted(PackageStats pStats, boolean succeeded) throws RemoteException {
+                            if (pStats.cacheSize > 0) {
+                                AppInfo appInfo=new AppInfo();
+                                //初始化其他基本信息
+                                initAppBaseInfo(packageInfo,appInfo);
+                                appInfo.setSize(pStats.cacheSize);
+                                appInfoList.add(appInfo);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onLooped(List<AppInfo> appInfoList) {
+                SystemClock.sleep(500);
+            }
+        });
+    }
+
+    /**
+     * 自定义封装应用信息接口
+     * @param <T>
+     */
+    public abstract class OnLoadListener<T extends AppInfo>{
+        /**
+         * 循环中
+         * @param packageInfo 包信息
+         * @param appInfoList 应用信息集合
+         */
+        public abstract void onLooping(PackageInfo packageInfo,List<T> appInfoList);
+
+        /**
+         * 循环结束
+         * @param appInfoList 应用信息集合
+         */
+        protected void onLooped(List<T> appInfoList){}
+        /**
+         * 初始化应用基本信息
+         * @param packageInfo 包信息
+         * @param appInfo 应用信息
+         */
+        protected void initAppBaseInfo(PackageInfo packageInfo,T appInfo){
             //应用名
             appInfo.setAppName(packageInfo.applicationInfo.loadLabel(mPackageManager).toString());
             //图标
             appInfo.setIcon(packageInfo.applicationInfo.loadIcon(mPackageManager));
             //包名
-            String packageName=packageInfo.packageName;
-            appInfo.setPackageName(packageName);
-            //通过反射调用被hide的方法,获得缓存大小
-            try {
-                Method method=PackageManager.class.getDeclaredMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
-                method.invoke(mPackageManager, packageName, new IPackageStatsObserver.Stub() {
-                    @Override
-                    public void onGetStatsCompleted(PackageStats pStats, boolean succeeded) throws RemoteException {
-                        if (pStats.cacheSize > 0) {
-                            appInfo.setSize(pStats.cacheSize);
-                            appInfoList.add(appInfo);
-                        }
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            appInfo.setPackageName(packageInfo.packageName);
         }
-        SystemClock.sleep(500);
+    }
+
+    /**
+     * 查询应用信息基本方法
+     */
+    public <T extends AppInfo> List<T> baseGetList(OnLoadListener<T> listener){
+        List<T> appInfoList=new ArrayList<>();
+        List<PackageInfo> installedPackageList = mPackageManager.getInstalledPackages(0);
+        for(PackageInfo packageInfo:installedPackageList){
+            listener.onLooping(packageInfo,appInfoList);
+        }
+        listener.onLooped(appInfoList);
         return appInfoList;
     }
 
