@@ -1,4 +1,4 @@
-package cn.aki.zhnbj.common;
+package cn.aki.zhbj.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,5 +22,10 @@ public final class C {
         }
         /**是否完成引导页*/
         public static final String KEY_IS_GUIDED="isGuided";
+    }
+
+    public static final class Url{
+        private static final String BASE="http://10.0.2.2:8080/zhbj/";
+        public static final String CATEGORIES=BASE+"categories.json";
     }
 }

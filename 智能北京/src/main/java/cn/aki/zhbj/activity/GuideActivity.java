@@ -1,4 +1,4 @@
-package cn.aki.zhnbj.activity;
+package cn.aki.zhbj.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,8 +18,8 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.aki.zhnbj.R;
-import cn.aki.zhnbj.common.C;
+import cn.aki.zhbj.R;
+import cn.aki.zhbj.common.C;
 
 /**
  * Created by Administrator on 2016/2/1.

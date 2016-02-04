@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <cn.aki.zhbj.view.NoScrollViewPager
+        android:id="@+id/vp_content"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <RadioGroup
+        android:id="@+id/rg_tabs"
+        android:background="@android:color/darker_gray"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rb_home"
+            android:text="首页"
+            android:drawableTop="@drawable/selector_tab_home"
+            style="@style/TabBtn"/>
+        <RadioButton
+            android:id="@+id/rb_news"
+            android:text="新闻中心"
+            android:drawableTop="@drawable/selector_tab_news"
+            style="@style/TabBtn"/>
+        <RadioButton
+            android:id="@+id/rb_service"
+            android:text="智慧服务"
+            android:drawableTop="@drawable/selector_tab_service"
+            style="@style/TabBtn"/>
+        <RadioButton
+            android:id="@+id/rb_affair"
+            android:text="政务"
+            android:drawableTop="@drawable/selector_tab_affair"
+            style="@style/TabBtn"/>
+        <RadioButton
+            android:id="@+id/rb_setting"
+            android:text="设置"
+            android:drawableTop="@drawable/selector_tab_setting"
+            style="@style/TabBtn"/>
+    </RadioGroup>
+</LinearLayout>

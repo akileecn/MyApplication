@@ -1,4 +1,4 @@
-package cn.aki.zhnbj;
+package cn.aki.zhbj;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
