@@ -45,15 +45,19 @@ public class MainContentFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mPageList=new ArrayList<>();
-        mPageList.add(new SimplePage(getActivity(),"首页",mMenu,false,"页面详情-首页"));
-        NewsCenterPage newsCenterPage=new NewsCenterPage(getActivity(), "新闻中心",mMenu);
-        if(mOnDataChangeListener!=null){
-            newsCenterPage.setOnDataChangeListener(mOnDataChangeListener);
+        mPageList.add(new SimplePage(getActivity(),"首页",mMenu,false));
+        mPageList.add(new NewsCenterPage(getActivity(), "新闻中心",mMenu));
+        mPageList.add(new SimplePage(getActivity(), "智慧服务",mMenu,true));
+        mPageList.add(new SimplePage(getActivity(), "政务",mMenu,true));
+        mPageList.add(new SimplePage(getActivity(), "设置",mMenu,false));
+        //绑定事件
+        if(mOnDataChangeListener!=null) {
+            for (BasePage page : mPageList) {
+                if(page.isShowMenu()){
+                    page.setOnDataChangeListener(mOnDataChangeListener);
+                }
+            }
         }
-        mPageList.add(newsCenterPage);
-        mPageList.add(new SimplePage(getActivity(), "智慧服务",mMenu,true, "智慧服务-新闻中心"));
-        mPageList.add(new SimplePage(getActivity(), "政务",mMenu,true, "页面详情-政务"));
-        mPageList.add(new SimplePage(getActivity(), "设置",mMenu,false, "页面详情-设置"));
         mContentAdapter=new MyContentAdapter();
         vpContent.setAdapter(mContentAdapter);
         //tab点击切换
@@ -78,7 +82,7 @@ public class MainContentFragment extends Fragment {
                         position = 4;
                         break;
                 }
-                if(position!=-1){
+                if (position != -1) {
                     vpContent.setCurrentItem(position, false);
                     mPageList.get(position).initData();
                 }
@@ -104,7 +108,7 @@ public class MainContentFragment extends Fragment {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            View view=mPageList.get(position).createView();
+            View view=mPageList.get(position).getView();
             container.addView(view);
             return view;
         }

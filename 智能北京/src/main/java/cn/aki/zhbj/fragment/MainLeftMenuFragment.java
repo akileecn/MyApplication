@@ -17,6 +17,7 @@ import java.util.List;
 
 import cn.aki.zhbj.R;
 import cn.aki.zhbj.data.response.Categories;
+import cn.aki.zhbj.page.BasePage;
 
 /**
  * Created by Administrator on 2016/2/3.
@@ -28,32 +29,40 @@ public class MainLeftMenuFragment extends Fragment {
     private BaseAdapter mMyMenuAdapter;
     private int mCurrentPosition;
     private SlidingMenu mMenu;//活动菜单
+    private BasePage mCurrentPage;//当前所属页面
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_main_left_menu,container,false);
         lvMenu= (ListView) rootView.findViewById(R.id.lv_menu);
-        lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mCurrentPosition=position;
-                mMyMenuAdapter.notifyDataSetChanged();
-                if(mMenu!=null&&mMenu.isMenuShowing()){
-                    mMenu.toggle();
-                }
-            }
-        });
         return rootView;
     }
 
     /**
      * 更新列表
      */
-    public void updateList(Categories categories){
+    public void updateList(BasePage page,Categories categories){
+        mCurrentPage=page;
         mDataList=categories.getData();
-        mMyMenuAdapter=new MyMenuAdapter();
-        lvMenu.setAdapter(mMyMenuAdapter);
+        mCurrentPosition=0;
+        if(mMyMenuAdapter==null){
+            mMyMenuAdapter=new MyMenuAdapter();
+            lvMenu.setAdapter(mMyMenuAdapter);
+            lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //更新菜单
+                    mCurrentPosition=position;
+                    mMyMenuAdapter.notifyDataSetChanged();
+                    if(mMenu!=null&&mMenu.isMenuShowing()){
+                        mMenu.toggle();
+                    }
+                    //更新内容页
+                    mCurrentPage.updateContent(position);
+                }
+            });
+        }
     }
 
     private class MyMenuAdapter extends BaseAdapter{
@@ -86,6 +95,9 @@ public class MainLeftMenuFragment extends Fragment {
         }
     }
 
+    /**
+     * 设置控制的菜单
+     */
     public void setSlidingMenu(SlidingMenu menu) {
         mMenu = menu;
     }

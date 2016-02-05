@@ -1,4 +1,4 @@
-package cn.aki.zhbj.page;
+package cn.aki.zhbj.page.detail;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,38 +8,28 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-
 import cn.aki.zhbj.data.response.Categories;
 
 /**
- * Created by Administrator on 2016/2/4.
- * 简单页面
+ * Created by Administrator on 2016/2/5.
+ * 简单详情页
  */
-public class SimplePage extends BasePage {
-    /**
-     * 构造方法
-     * @param context 上下文
-     */
-    public SimplePage(Context context,String title,SlidingMenu menu,boolean isShowMenu) {
-        super(context, title, menu,isShowMenu);
+public class SimpleDetailPage extends BaseDetailPage{
+
+    public SimpleDetailPage(Context context, Categories.Node data) {
+        super(context, data);
     }
 
     @Override
     protected void initView() {
-        super.initView();
         TextView view=new TextView(mContext);
-        view.setText("简单页面-"+mTitle);
+        view.setText("简单详情页-"+mData.getTitle());
         view.setTextColor(Color.RED);
         view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         view.setGravity(Gravity.CENTER);
         FrameLayout.LayoutParams params=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        flContent.addView(view, params);
+        view.setLayoutParams(params);
+        mRootView=view;
     }
 
-    @Override
-    public void initData() {
-        super.initData();
-        triggerOnDataChangeEvent(Categories.EMPTY_DATA);
-    }
 }

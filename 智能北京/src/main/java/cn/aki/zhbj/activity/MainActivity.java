@@ -1,7 +1,6 @@
 package cn.aki.zhbj.activity;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -34,8 +33,8 @@ public class MainActivity extends Activity{
         SlidingMenu menu = new SlidingMenu(this);
         //显示方式
         menu.setMode(SlidingMenu.LEFT);
-        //触发显示的范围
-        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        //触发显示的范围(仅边缘处可以滑动)
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 //        menu.setShadowWidthRes(R.dimen.shadow_width);
 //        menu.setShadowDrawable(R.drawable.shadow);
         menu.setBehindOffset(300);
@@ -50,8 +49,8 @@ public class MainActivity extends Activity{
         /**数据交互*/
         mContentFragment.setOnDataChangeListener(new BasePage.OnDataChangeListener() {
             @Override
-            public void onDataChange(Categories data) {
-                mLeftMenuFragment.updateList(data);
+            public void onDataChange(BasePage page,Categories data) {
+                mLeftMenuFragment.updateList(page,data);
             }
         });
         getFragmentManager()
@@ -60,6 +59,5 @@ public class MainActivity extends Activity{
                 .replace(R.id.fl_left_menu,mLeftMenuFragment)
                 .commit();
     }
-
 
 }

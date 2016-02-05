@@ -1,6 +1,7 @@
 package cn.aki.zhbj.data.response;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,6 +10,12 @@ import java.util.List;
  * 分类
  */
 public class Categories {
+    //空对象
+    public static final Categories EMPTY_DATA;
+    static{
+        EMPTY_DATA=new Categories();
+        EMPTY_DATA.data=new ArrayList<>();
+    }
     private int retcode;
     private List<ParentNode> data;
     private int[] extend;
