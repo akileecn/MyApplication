@@ -25,5 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'org.xutils:xutils:3.3.12'
     compile 'com.google.code.gson:gson:2.5'
-    compile project(':library_SlidingMenu')
+    compile project(':SlidingMenu')
 }

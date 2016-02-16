@@ -9,7 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/library_SlidingMenu" />
+            <option value="$PROJECT_DIR$/SlidingMenu" />
             <option value="$PROJECT_DIR$/手机安全卫士" />
             <option value="$PROJECT_DIR$/智能北京" />
           </set>
