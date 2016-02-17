@@ -25,7 +25,7 @@ import cn.aki.zhbj.page.BasePage;
  */
 public class MainLeftMenuFragment extends Fragment {
     private ListView lvMenu;//菜单列表
-    List<Categories.ParentNode> mDataList;
+    List<Categories.ParentMenu> mDataList;
     private BaseAdapter mMyMenuAdapter;
     private int mCurrentPosition;
     private SlidingMenu mMenu;//活动菜单
@@ -44,7 +44,7 @@ public class MainLeftMenuFragment extends Fragment {
      */
     public void updateList(BasePage page,Categories categories){
         mCurrentPage=page;
-        mDataList=categories.getData();
+        mDataList=categories.data;
         mCurrentPosition=0;
         if(mMyMenuAdapter==null){
             mMyMenuAdapter=new MyMenuAdapter();
@@ -73,7 +73,7 @@ public class MainLeftMenuFragment extends Fragment {
         }
 
         @Override
-        public Categories.ParentNode getItem(int position) {
+        public Categories.ParentMenu getItem(int position) {
             return mDataList.get(position);
         }
 
@@ -88,7 +88,7 @@ public class MainLeftMenuFragment extends Fragment {
                 convertView=View.inflate(getActivity(),R.layout.item_main_menu,null);
             }
             TextView tvName= (TextView) convertView.findViewById(R.id.tv_name);
-            tvName.setText(getItem(position).getTitle());
+            tvName.setText(getItem(position).title);
             //根据是否被选中修改样式
             tvName.setEnabled(position==mCurrentPosition);
             return convertView;

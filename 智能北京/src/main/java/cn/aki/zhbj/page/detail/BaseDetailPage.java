@@ -10,9 +10,9 @@ import cn.aki.zhbj.page.Page;
  * 基本详情页
  */
 public abstract class BaseDetailPage extends Page {
-    protected Categories.Node mData;//数据源
+    protected Categories.Menu mData;//数据源
 
-    public BaseDetailPage(Context context,Categories.Node data) {
+    public BaseDetailPage(Context context,Categories.Menu data) {
         super(context);
         mData=data;
     }

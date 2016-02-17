@@ -25,7 +25,8 @@ public final class C {
     }
 
     public static final class Url{
-        private static final String BASE="http://10.0.2.2:8080/zhbj/";
+        public static final String BASE="http://192.168.2.37:8080/zhbj/";
+        public static final String DEPRECATED_BASE="http://10.0.2.2:8080/zhbj/";
         public static final String CATEGORIES=BASE+"categories.json";
     }
 }

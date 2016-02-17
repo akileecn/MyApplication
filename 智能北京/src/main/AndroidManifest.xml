@@ -20,7 +20,8 @@
         <!-- 引导页 -->
         <activity android:name=".activity.GuideActivity"/>
         <!-- 首页 -->
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity"
+            android:theme="@style/MyTabIndicatorTheme"/>
     </application>
 
 </manifest>

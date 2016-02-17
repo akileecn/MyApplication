@@ -16,14 +16,14 @@ import cn.aki.zhbj.data.response.Categories;
  */
 public class SimpleDetailPage extends BaseDetailPage{
 
-    public SimpleDetailPage(Context context, Categories.Node data) {
+    public SimpleDetailPage(Context context, Categories.Menu data) {
         super(context, data);
     }
 
     @Override
     protected void initView() {
         TextView view=new TextView(mContext);
-        view.setText("简单详情页-"+mData.getTitle());
+        view.setText("简单详情页-"+mData.title);
         view.setTextColor(Color.RED);
         view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         view.setGravity(Gravity.CENTER);

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="200dp">
+        <cn.aki.zhbj.view.TopNewsViewPager
+            android:id="@+id/vp_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <RelativeLayout
+            android:background="#3000"
+            android:padding="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_title"
+                android:text="新闻标题"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/cpi_top"
+                android:layout_alignParentRight="true"
+                android:padding="5dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                app:snap="true"
+                app:gap="1dp"
+                app:radius="5dp"
+                app:fillColor="@android:color/holo_red_dark"
+                app:pageColor="@android:color/darker_gray"
+                app:strokeColor="@android:color/white"
+                app:strokeWidth="1dp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

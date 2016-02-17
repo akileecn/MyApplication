@@ -49,12 +49,12 @@ public class NewsCenterPage extends BasePage{
                 triggerOnDataChangeEvent(mCategories);
                 mBaseDetailPageList=new ArrayList<>();
                 boolean first=true;
-                for(Categories.ParentNode node:mCategories.getData()){
+                for(Categories.ParentMenu menu:mCategories.data){
                     if(first){
-                        mBaseDetailPageList.add(new NewsDetailPage(mContext,node));
+                        mBaseDetailPageList.add(new NewsDetailPage(mContext,menu,mMenu));
                         first=false;
                     }else{
-                        mBaseDetailPageList.add(new SimpleDetailPage(mContext,node));
+                        mBaseDetailPageList.add(new SimpleDetailPage(mContext,menu));
                     }
                 }
                 updateContent(0);
@@ -80,7 +80,7 @@ public class NewsCenterPage extends BasePage{
     @Override
     public void updateContent(int position) {
         //标题
-        tvTitle.setText(mCategories.getData().get(position).getTitle());
+        tvTitle.setText(mCategories.data.get(position).title);
         //内容
         flContent.removeAllViews();
         flContent.addView(mBaseDetailPageList.get(position).getView());
