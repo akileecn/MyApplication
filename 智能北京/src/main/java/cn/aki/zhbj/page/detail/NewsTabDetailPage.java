@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +24,7 @@ import cn.aki.zhbj.R;
 import cn.aki.zhbj.common.C;
 import cn.aki.zhbj.data.response.Categories;
 import cn.aki.zhbj.data.response.NewsData;
+import cn.aki.zhbj.view.RefreshListView;
 
 /**
  * Created by Administrator on 2016/2/16.
@@ -33,7 +33,7 @@ import cn.aki.zhbj.data.response.NewsData;
 public class NewsTabDetailPage extends BaseDetailPage {
     private ViewPager vpTop;//热点图
     private CirclePageIndicator cpiTop;//热点图指示器
-    private ListView lvNews;//新闻列表
+    private RefreshListView lvNews;//新闻列表
     private TextView tvTitle;//热点新闻标题
     private NewsData mNewsData;//总新闻数据
     private List<NewsData.TopNews> mTopNewsList;//热点新闻数据列表
@@ -47,17 +47,16 @@ public class NewsTabDetailPage extends BaseDetailPage {
     @Override
     protected void initView() {
         mImageOptions=new ImageOptions.Builder()
-                .setLoadingDrawableId(R.mipmap.topnews_item_default)
-                .setFailureDrawableId(R.mipmap.topnews_item_default)
+                .setLoadingDrawableId(R.drawable.topnews_item_default)
+                .setFailureDrawableId(R.drawable.topnews_item_default)
                 .build();
         mRootView= View.inflate(mContext, R.layout.detail_page_news_tab,null);
-        lvNews= (ListView) mRootView.findViewById(R.id.lv_news);
-        /**热点图作为一般新闻列表的headerView*/
+        lvNews= (RefreshListView) mRootView.findViewById(R.id.lv_news);
+        /**热点图headerView*/
         View topHeaderView=View.inflate(mContext,R.layout.header_top_news,null);
         vpTop= (ViewPager) topHeaderView.findViewById(R.id.vp_top);
         cpiTop= (CirclePageIndicator) topHeaderView.findViewById(R.id.cpi_top);
         tvTitle= (TextView) topHeaderView.findViewById(R.id.tv_title);
-
         lvNews.addHeaderView(topHeaderView);
         vpTop.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

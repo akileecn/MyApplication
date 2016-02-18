@@ -13,7 +13,7 @@
             android:layout_width="0dp" />
         <ImageButton
             android:id="@+id/ib_next"
-            android:src="@mipmap/news_cate_arr"
+            android:src="@drawable/news_cate_arr"
             android:background="@android:color/transparent"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"

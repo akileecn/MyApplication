@@ -26,7 +26,7 @@ import cn.aki.zhbj.common.C;
  * 引导页
  */
 public class GuideActivity extends Activity {
-    private static final int[] imageResIds={R.mipmap.guide_1,R.mipmap.guide_2,R.mipmap.guide_3};//引导页图片
+    private static final int[] imageResIds={R.drawable.guide_1,R.drawable.guide_2,R.drawable.guide_3};//引导页图片
 
     private SharedPreferences mPref;
     private ViewPager vpGuide;//滑动图片视图
