@@ -24,7 +24,7 @@ public class SplashActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPref= C.Sp.getSharedPreferences(this);
+        mPref= C.getConfig(this);
         initView();
     }
 

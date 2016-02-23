@@ -9,24 +9,34 @@ import android.content.SharedPreferences;
  */
 public final class C {
     /**
+     * 获得配置SharedPreferences
+     */
+    public static SharedPreferences getConfig(Context context){
+        return context.getSharedPreferences(Sp.FILE_CONFIG,Context.MODE_PRIVATE);
+    }
+    /**
      * SharedPreferences
      */
-    public static final class Sp{
-        private static final String FILE_NAME="config";
-
-        /**
-         * 获得SharedPreferences
-         */
-        public static SharedPreferences getSharedPreferences(Context context){
-            return context.getSharedPreferences(FILE_NAME,Context.MODE_PRIVATE);
-        }
+    public interface Sp{
+        String FILE_CONFIG="config";
         /**是否完成引导页*/
-        public static final String KEY_IS_GUIDED="isGuided";
+        String KEY_IS_GUIDED="isGuided";
+        /**网页字体大小*/
+        String KEY_WEB_TEXT_SIZE="webTextSize";
+        /**点击的链接*/
+        String KEY_CLICKED_LINK="clickedLink";
+        /**组图显示类型*/
+        String KEY_PHOTO_SHOW_TYPE="photoShowType";
     }
 
-    public static final class Url{
-        public static final String BASE="http://192.168.2.37:8080/zhbj/";
-        public static final String DEPRECATED_BASE="http://10.0.2.2:8080/zhbj/";
-        public static final String CATEGORIES=BASE+"categories.json";
+    public interface Url{
+        String BASE="http://192.168.2.37:8080/zhbj/";
+        String DEPRECATED_BASE="http://10.0.2.2:8080/zhbj/";
+        String CATEGORIES=BASE+"categories.json";
+        String PHOTO=BASE+"photos/photos_1.json";
+    }
+
+    public interface Extra{
+        String URL="url";
     }
 }
