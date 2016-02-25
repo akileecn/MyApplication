@@ -22,7 +22,6 @@ import cn.aki.zhbj.page.detail.BaseDetailPage;
 import cn.aki.zhbj.page.detail.NewsDetailPage;
 import cn.aki.zhbj.page.detail.PhotoDetailPage;
 import cn.aki.zhbj.page.detail.SimpleDetailPage;
-import cn.aki.zhbj.utils.CacheUtils;
 
 /**
  * Created by Administrator on 2016/2/4.
@@ -34,7 +33,6 @@ public class NewsCenterPage extends BasePage{
     private Button btnShowType;//组图显示按钮
     public NewsCenterPage(Context context, String title, SlidingMenu menu) {
         super(context, title, menu, true);
-
     }
 
     @Override
@@ -47,7 +45,7 @@ public class NewsCenterPage extends BasePage{
     public void initData() {
         super.initData();
         //解析缓存
-        String cache=CacheUtils.getCache(mContext,C.Url.CATEGORIES);
+        String cache= mJsonCache.getCache(C.Url.CATEGORIES);
         if(cache!=null){
             parseData(cache);
         }
@@ -56,7 +54,7 @@ public class NewsCenterPage extends BasePage{
             @Override
             public void onSuccess(String result) {
                 //保存缓存
-                CacheUtils.saveCache(mContext,C.Url.CATEGORIES,result);
+                mJsonCache.saveCache(C.Url.CATEGORIES, result);
                 parseData(result);
             }
 

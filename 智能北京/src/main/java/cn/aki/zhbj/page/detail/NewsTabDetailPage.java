@@ -33,7 +33,7 @@ import cn.aki.zhbj.activity.NewsDetailActivity;
 import cn.aki.zhbj.common.C;
 import cn.aki.zhbj.data.response.Categories;
 import cn.aki.zhbj.data.response.NewsData;
-import cn.aki.zhbj.utils.CacheUtils;
+import cn.aki.zhbj.utils.ImageUtils;
 import cn.aki.zhbj.view.RefreshListView;
 
 /**
@@ -51,6 +51,7 @@ public class NewsTabDetailPage extends BaseDetailPage {
     private List<NewsData.ListNews> mNewsList;//新闻数据列表
     private ImageOptions mImageOptions;//图片加载参数
     private SharedPreferences mPref;
+    private ImageUtils mImageUtils;
 
     private static final int WHAT_CAROUSEL=1;//轮播
     private Handler mHandler;
@@ -61,6 +62,7 @@ public class NewsTabDetailPage extends BaseDetailPage {
 
     @Override
     protected void initView() {
+        mImageUtils=new ImageUtils(mContext);
         mPref=C.getConfig(mContext);
         mImageOptions=new ImageOptions.Builder()
                 .setLoadingDrawableId(R.drawable.topnews_item_default)
@@ -133,6 +135,11 @@ public class NewsTabDetailPage extends BaseDetailPage {
                 }
             }
         });
+        //解析缓存
+        String cache= mJsonCache.getCache(C.Url.BASE + mData.url);
+        if(cache!=null){
+            parseData(cache, false);
+        }
         initData();
     }
 
@@ -151,20 +158,14 @@ public class NewsTabDetailPage extends BaseDetailPage {
             lvNews.notifyRefreshed(false);
             return;
         }
-        //解析缓存
         final String url=C.Url.BASE+(isMore?mMoreUrl:mData.url);
-        String cache= CacheUtils.getCache(mContext, url);
-        if(cache!=null){
-            parseData(cache,isMore);
-            lvNews.notifyRefreshed(true);
-        }
         RequestParams params=new RequestParams(url);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                CacheUtils.saveCache(mContext,url,result);
                 parseData(result, isMore);
                 lvNews.notifyRefreshed(true);
+                mJsonCache.saveCache(url, result);
             }
 
             @Override
@@ -193,6 +194,7 @@ public class NewsTabDetailPage extends BaseDetailPage {
         if(!isMore){
             mTopNewsList=newsData.data.topnews;
             mNewsList=newsData.data.news;
+
             //热点
             if(mTopNewsList!=null&&mTopNewsList.size()>0){
                 vpTop.setAdapter(new MyTopPagerAdapter());
@@ -256,7 +258,8 @@ public class NewsTabDetailPage extends BaseDetailPage {
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView view=new ImageView(mContext);
             NewsData.TopNews topNews=mTopNewsList.get(position);
-            x.image().bind(view, topNews.topimage,mImageOptions);
+//            x.image().bind(view, topNews.topimage,mImageOptions);
+            mImageUtils.bind(topNews.topimage,view);
             container.addView(view);
             return view;
         }
@@ -306,7 +309,8 @@ public class NewsTabDetailPage extends BaseDetailPage {
                 viewHolder.tvTitle.setTextColor(Color.GRAY);
             }
             viewHolder.tvTime.setText(news.pubdate);
-            x.image().bind(viewHolder.ivImage,news.listimage,mImageOptions);
+//            x.image().bind(viewHolder.ivImage,news.listimage,mImageOptions);
+            mImageUtils.bind(news.listimage,viewHolder.ivImage);
             return convertView;
         }
 

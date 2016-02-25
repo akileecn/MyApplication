@@ -25,7 +25,7 @@ import cn.aki.zhbj.R;
 import cn.aki.zhbj.common.C;
 import cn.aki.zhbj.data.response.Categories;
 import cn.aki.zhbj.data.response.NewsData;
-import cn.aki.zhbj.utils.CacheUtils;
+import cn.aki.zhbj.utils.ImageUtils;
 
 /**
  * Created by Administrator on 2016/2/23.
@@ -40,6 +40,7 @@ public class PhotoDetailPage extends BaseDetailPage {
     private final int[] mIcons={R.drawable.icon_pic_list_type,R.drawable.icon_pic_grid_type};
     private ImageOptions mImageOptions;
     private SharedPreferences mPref;
+    private ImageUtils mImageUtils;//自定义图片加载工具
 
     public PhotoDetailPage(Context context, Categories.Menu data,Button showType) {
         super(context, data);
@@ -53,6 +54,7 @@ public class PhotoDetailPage extends BaseDetailPage {
                 .setLoadingDrawableId(R.drawable.topnews_item_default)
                 .setFailureDrawableId(R.drawable.topnews_item_default)
                 .build();
+        mImageUtils=new ImageUtils(mContext);
         mRootView= View.inflate(mContext, R.layout.detail_page_photo, null);
         lvPhoto= (ListView) mRootView.findViewById(R.id.lv_photo);
         gvPhoto= (GridView) mRootView.findViewById(R.id.gv_photo);
@@ -60,12 +62,17 @@ public class PhotoDetailPage extends BaseDetailPage {
             @Override
             public void onClick(View v) {
                 //图片显示方式切换
-                boolean isShowList=mPref.getBoolean(C.Sp.KEY_PHOTO_SHOW_TYPE,true);
+                boolean isShowList = mPref.getBoolean(C.Sp.KEY_PHOTO_SHOW_TYPE, true);
                 initShowType(!isShowList);
-                mPref.edit().putBoolean(C.Sp.KEY_PHOTO_SHOW_TYPE,!isShowList).apply();
+                mPref.edit().putBoolean(C.Sp.KEY_PHOTO_SHOW_TYPE, !isShowList).apply();
             }
         });
-        initShowType(mPref.getBoolean(C.Sp.KEY_PHOTO_SHOW_TYPE,true));
+        initShowType(mPref.getBoolean(C.Sp.KEY_PHOTO_SHOW_TYPE, true));
+        //读取缓存
+        String data= mJsonCache.getCache(C.Url.PHOTO);
+        if(data!=null){
+            parseData(data);
+        }
         initData();
     }
 
@@ -82,8 +89,8 @@ public class PhotoDetailPage extends BaseDetailPage {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                CacheUtils.saveCache(mContext, url, result);
                 parseData(result);
+                mJsonCache.saveCache(url, result);
             }
 
             @Override
@@ -143,7 +150,8 @@ public class PhotoDetailPage extends BaseDetailPage {
             }
             NewsData.ListNews news=getItem(position);
             viewHolder.tvTitle.setText(news.title);
-            x.image().bind(viewHolder.ivImage,news.listimage,mImageOptions);
+//            x.image().bind(viewHolder.ivImage,news.listimage,mImageOptions);
+            mImageUtils.bind(news.listimage,viewHolder.ivImage);
             return convertView;
         }
 

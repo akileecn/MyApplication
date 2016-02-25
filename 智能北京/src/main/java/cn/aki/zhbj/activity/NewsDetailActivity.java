@@ -51,7 +51,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                Log.i(TAG, "加载页面->" + url);
+                Log.d(TAG, "加载页面->" + url);
             }
 
             /**
@@ -60,7 +60,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                Log.i(TAG, "页面加载完成->" + url);
+                Log.d(TAG, "页面加载完成->" + url);
             }
 
             /**
@@ -68,7 +68,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
              */
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.i(TAG, "连接跳转->" + url);
+                Log.d(TAG, "连接跳转->" + url);
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });

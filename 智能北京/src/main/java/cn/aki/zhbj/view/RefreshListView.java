@@ -87,6 +87,7 @@ public class RefreshListView extends ListView{
                     if(mLoadListener!=null){
                         mLoadListener.loadMore();
                     }
+                    mHeaderView.setPadding(0, -mHeaderHeight, 0, 0);
                 }
             }
 
@@ -174,6 +175,7 @@ public class RefreshListView extends ListView{
             default:
                 break;
         }
+        mFooterView.setPadding(0,-mFooterHeight,0,0);
     }
 
     /**
