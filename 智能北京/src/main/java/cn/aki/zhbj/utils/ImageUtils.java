@@ -2,6 +2,7 @@ package cn.aki.zhbj.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
@@ -17,12 +18,20 @@ import cn.aki.zhbj.utils.http.BitmapHttpTask;
  */
 public class ImageUtils {
     private static final String TAG=ImageUtils.class.getName();
-    private ICache<Bitmap> mFileCache;
+    private ImageFileCache mFileCache;
     private ICache<Bitmap> mMemoryCache;
+    private BitmapFactory.Options mOptions;
 
     public ImageUtils(Context context){
         mFileCache=new ImageFileCache(context);
         mMemoryCache=new ImageMemoryCache();
+    }
+
+    /**
+     * 设置图片配置
+     */
+    public void setOptions(BitmapFactory.Options options){
+        mOptions=options;
     }
 
     /**
@@ -31,13 +40,12 @@ public class ImageUtils {
     public void bind(String url,ImageView imageView){
         Log.d(TAG, "bind->url:" + url);
         //从内存中获得
-        Bitmap bitmap=null;
-//        Bitmap bitmap=mMemoryCache.getCache(url);
+        Bitmap bitmap=mMemoryCache.getCache(url);
         if(bitmap!=null){
             imageView.setImageBitmap(bitmap);
         }else{
             //从本地文件中获得
-            bitmap=mFileCache.getCache(url);
+            bitmap=mFileCache.getCache(url,mOptions);
             if(bitmap!=null){
                 imageView.setImageBitmap(bitmap);
                 //保存内存缓存

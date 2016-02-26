@@ -3,6 +3,7 @@ package cn.aki.zhbj.page.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -63,6 +64,9 @@ public class NewsTabDetailPage extends BaseDetailPage {
     @Override
     protected void initView() {
         mImageUtils=new ImageUtils(mContext);
+        BitmapFactory.Options options=new BitmapFactory.Options();
+        options.inSampleSize=4;//宽高设置为原来的1/4
+        mImageUtils.setOptions(options);
         mPref=C.getConfig(mContext);
         mImageOptions=new ImageOptions.Builder()
                 .setLoadingDrawableId(R.drawable.topnews_item_default)
@@ -235,7 +239,7 @@ public class NewsTabDetailPage extends BaseDetailPage {
                     return true;
                 }
             });
-            mHandler.sendEmptyMessageDelayed(WHAT_CAROUSEL, 3000);
+//            mHandler.sendEmptyMessageDelayed(WHAT_CAROUSEL, 3000);
         }
     }
 

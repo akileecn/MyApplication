@@ -2,6 +2,7 @@ package cn.aki.zhbj.page.detail;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,7 +17,6 @@ import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
-import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.util.List;
@@ -38,7 +38,6 @@ public class PhotoDetailPage extends BaseDetailPage {
     private ListView lvPhoto;
     private GridView gvPhoto;
     private final int[] mIcons={R.drawable.icon_pic_list_type,R.drawable.icon_pic_grid_type};
-    private ImageOptions mImageOptions;
     private SharedPreferences mPref;
     private ImageUtils mImageUtils;//自定义图片加载工具
 
@@ -50,11 +49,10 @@ public class PhotoDetailPage extends BaseDetailPage {
     @Override
     protected void initView() {
         mPref=C.getConfig(mContext);
-        mImageOptions=new ImageOptions.Builder()
-                .setLoadingDrawableId(R.drawable.topnews_item_default)
-                .setFailureDrawableId(R.drawable.topnews_item_default)
-                .build();
         mImageUtils=new ImageUtils(mContext);
+        BitmapFactory.Options options=new BitmapFactory.Options();
+        options.inSampleSize=4;//宽高设置为原来的1/4
+        mImageUtils.setOptions(options);
         mRootView= View.inflate(mContext, R.layout.detail_page_photo, null);
         lvPhoto= (ListView) mRootView.findViewById(R.id.lv_photo);
         gvPhoto= (GridView) mRootView.findViewById(R.id.gv_photo);
@@ -150,7 +148,6 @@ public class PhotoDetailPage extends BaseDetailPage {
             }
             NewsData.ListNews news=getItem(position);
             viewHolder.tvTitle.setText(news.title);
-//            x.image().bind(viewHolder.ivImage,news.listimage,mImageOptions);
             mImageUtils.bind(news.listimage,viewHolder.ivImage);
             return convertView;
         }

@@ -13,6 +13,7 @@
             android:src="@drawable/topnews_item_default"
             android:scaleType="centerCrop"
             android:layout_weight="1"
+            android:minHeight="100dp"
             android:layout_width="match_parent"
             android:layout_height="0dp" />
         <TextView

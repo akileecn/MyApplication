@@ -14,14 +14,11 @@ import java.io.IOException;
  * Created by Administrator on 2016/2/25.
  * 图片本地文件缓存
  */
-public class ImageFileCache extends FileCache<Bitmap> {
+public class ImageFileCache extends FileCache<Bitmap>{
     private static final String TAG= ImageFileCache.class.getName();
-    private BitmapFactory.Options mOptions;
 
     public ImageFileCache(Context context) {
         super(context);
-        mOptions=new BitmapFactory.Options();
-        mOptions.inSampleSize=4;//长宽都缩减为1/4,防止内存溢出
     }
 
     @Override
@@ -46,10 +43,18 @@ public class ImageFileCache extends FileCache<Bitmap> {
 
     @Override
     public Bitmap getCache(String key) {
+        return getCache(key,null);
+    }
+
+    public Bitmap getCache(String key,BitmapFactory.Options options) {
         File file=getCacheFile(key);
         if(file!=null&&file.exists()) {
             Log.d(TAG, "getCache->" + key);
-            return BitmapFactory.decodeFile(file.getAbsolutePath(),mOptions);
+            if(options==null){
+                return BitmapFactory.decodeFile(file.getAbsolutePath());
+            }else{
+                return BitmapFactory.decodeFile(file.getAbsolutePath(),options);
+            }
         }
         return null;
     }

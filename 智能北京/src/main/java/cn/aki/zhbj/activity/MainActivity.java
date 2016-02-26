@@ -3,9 +3,12 @@ package cn.aki.zhbj.activity;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import cn.aki.zhbj.R;
+import cn.aki.zhbj.common.C;
 import cn.aki.zhbj.data.response.Categories;
 import cn.aki.zhbj.fragment.MainContentFragment;
 import cn.aki.zhbj.fragment.MainLeftMenuFragment;
@@ -23,6 +26,8 @@ public class MainActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //启动推送监听
+        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, C.Key.BAIDU_PUSH_API_KEY);
         initView();
     }
 

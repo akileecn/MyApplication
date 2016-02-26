@@ -39,4 +39,9 @@ public final class C {
     public interface Extra{
         String URL="url";
     }
+
+    public interface Key{
+        /**百度云推送apiKey*/
+        String BAIDU_PUSH_API_KEY="oIvGEaTk7VQs0GoIUf05AWG9";
+    }
 }
