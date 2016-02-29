@@ -20,6 +20,7 @@ import java.util.List;
 
 import cn.aki.zhbj.R;
 import cn.aki.zhbj.common.C;
+import cn.aki.zhbj.utils.UiUtils;
 
 /**
  * Created by Administrator on 2016/2/1.
@@ -59,10 +60,13 @@ public class GuideActivity extends Activity {
         /**初始化圆点*/
         ivRedPoint= (ImageView) findViewById(R.id.iv_red_point);
         llPoints= (LinearLayout) findViewById(R.id.ll_points);
+        //dp资源转px
+//        int pxValue=getResources().getDimensionPixelSize(R.dimen.guide_point_size);
+        int pxValue= UiUtils.dp2px(this,10);
         for(int i=0;i<imageResIds.length;i++){
             View pointView=new View(this);
             pointView.setBackgroundResource(R.drawable.shape_point_grey);
-            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(10,10);
+            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(pxValue,pxValue);
             if(i>0){
                 params.leftMargin=20;
             }

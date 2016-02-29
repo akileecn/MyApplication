@@ -1,6 +1,7 @@
 package cn.aki.zhbj.activity;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
 
 import com.baidu.android.pushservice.PushConstants;
@@ -13,6 +14,7 @@ import cn.aki.zhbj.data.response.Categories;
 import cn.aki.zhbj.fragment.MainContentFragment;
 import cn.aki.zhbj.fragment.MainLeftMenuFragment;
 import cn.aki.zhbj.page.BasePage;
+import cn.aki.zhbj.utils.UiUtils;
 
 /**
  * Created by Administrator on 2016/2/2.
@@ -42,7 +44,9 @@ public class MainActivity extends Activity{
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 //        menu.setShadowWidthRes(R.dimen.shadow_width);
 //        menu.setShadowDrawable(R.drawable.shadow);
-        menu.setBehindOffset(300);
+        Point point= UiUtils.getWindowSize(this);
+        //预留屏幕的2/3
+        menu.setBehindOffset(point.x*2/3);
 //        menu.setFadeDegree(0.35f);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         menu.setMenu(R.layout.sliding_menu_main);

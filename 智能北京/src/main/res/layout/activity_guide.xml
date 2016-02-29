@@ -33,7 +33,7 @@
         <ImageView
             android:id="@+id/iv_red_point"
             android:src="@drawable/shape_point_red"
-            android:layout_width="10dp"
-            android:layout_height="10dp"/>
+            android:layout_width="@dimen/guide_point_size"
+            android:layout_height="@dimen/guide_point_size"/>
     </RelativeLayout>
 </RelativeLayout>
